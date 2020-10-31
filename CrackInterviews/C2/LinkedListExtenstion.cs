@@ -15,7 +15,7 @@ namespace C2
                 current = current.Next;
             }
             
-            return dummyHead;
+            return dummyHead.Next;
         }
 
         public static List<SinglyLinkedListNode> ToList(this SinglyLinkedListNode singlyLinkedListNode)

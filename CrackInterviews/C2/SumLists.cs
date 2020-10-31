@@ -15,49 +15,53 @@ namespace C2
             var current1 = head1;
             var current2 = head2;
 
+            var result = new StringBuilder();
+            var carry = 0;
             while (current1 != null || current2 != null)
             {
+                var value1 = current1?.Data ?? 0;
+                var value2 = current2?.Data ?? 0;
+                
+                var sum = value1 + value2 + carry;
 
-            }
-
-            return "";
-        }
-
-        public static SinglyLinkedListNode Calculate2(SinglyLinkedListNode head)
-        {
-            if (head == null)
-                return null;
-
-            var current = head;
-            while (current != null)
-            {
-                var runner = current;
-                while (runner != null && runner.Next != null)
+                var remainder = 0;
+                if (sum > 9)
                 {
-                    if (runner.Next.Data == current.Data)
-                    {
-                        runner.Next = runner.Next.Next;
-                    }
-                    runner = runner.Next;
+                    carry = 1;
+                    remainder = sum - 10;
                 }
+                else
+                {
+                    carry = 0;
+                    remainder = sum;
+                }
+                
+                result.Insert(0, remainder.ToString());
+                current1 = current1?.Next;
+                current2 = current2?.Next;
             }
+            
+            if (carry == 1)
+                result.Insert(0, "1");
 
-            return head;
+            return result.ToString();
         }
 
         [TestCaseSource(nameof(SumLists.GetTestData))]
-        public void SumListsTest(SinglyLinkedListNode head)
+        public void SumListsTest(SinglyLinkedListNode head1, SinglyLinkedListNode head2, string expectedResult)
         {
-            var result = SumLists.Calculate1(head);
+            Assert.That(SumLists.Calculate1(head1, head2), Is.EqualTo(expectedResult));
 
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
         {
-            yield return new TestCaseData(new int[] { 1, 2, 1, 3 }.ToLinkedList());
-            yield return new TestCaseData(new int[] { 1, 1, 1, 1 }.ToLinkedList());
-            yield return new TestCaseData(new int[] { 1, 2, 3, 4 }.ToLinkedList());
-            yield return new TestCaseData(null);
+            yield return new TestCaseData(new [] { 1, 2, 3 }.ToLinkedList(), new [] {1, 2, 3}.ToLinkedList(), "642");
+            yield return new TestCaseData(new [] { 1, 2, 3 }.ToLinkedList(), new [] {1, 2, 3, 4}.ToLinkedList(), "4642");
+            yield return new TestCaseData(new [] { 1, 2, 3, 4 }.ToLinkedList(), new [] {1, 2, 3}.ToLinkedList(), "4642");
+            yield return new TestCaseData(null, new [] {1, 2, 3}.ToLinkedList(), "321");
+            yield return new TestCaseData(new [] { 1, 2, 3, 4 }.ToLinkedList(), null, "4321");
+            yield return new TestCaseData(null, null, string.Empty);
         }
     }
 }
