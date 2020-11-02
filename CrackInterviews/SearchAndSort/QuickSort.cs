@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 using SearchAndSort;
@@ -19,9 +21,9 @@ namespace Searching
 
         private static void Sort(int start, int end, int[] array)
         {
-            var pivotIndex = QuickSort.Partition(start, end, array);
-            if (pivotIndex >= 0)
+            if (start < end)
             {
+                var pivotIndex = QuickSort.Partition(start, end, array);
                 Sort(start, pivotIndex - 1, array);
                 Sort(pivotIndex + 1, end, array);
             }
@@ -29,42 +31,41 @@ namespace Searching
 
         private static int Partition(int start, int end, int[] array)
         {
-            if (start >= end)
-                return -1;
-
-            int pivotValue = array[end];
             int pointer = start;
-            for (int i = start; i <= end; i++)
+            for (int i = start; i < end; i++)
             {
-                if (array[i] < pivotValue)
+                if (array[i] < array[end])
                 {
                     array.Swap(i, pointer);
                     pointer++;
                 }
             }
 
-            array[pointer] = pivotValue;
+            array.Swap(end, pointer);
             return pointer;
         }
 
         [TestCaseSource(nameof(GetTestData))]
-        public void Test1(int[] arrayToSort, int[] sortedArray)
+        public void QuickSortTest(int[] arrayToSort)
         {
-            var result = QuickSort.Calculate1(sortedArray);
-            Assert.That(result.Length, Is.EqualTo(sortedArray.Length));
+            var expectedResult = arrayToSort.OrderBy( x => x).ToArray();
+            var result = QuickSort.Calculate1(arrayToSort);
+            Assert.That(result.Length, Is.EqualTo(expectedResult.Length));
             for (int i = 0; i < arrayToSort.Length; i++)
             {
-                Assert.That(result[i], Is.EqualTo(sortedArray[i]));
+                Assert.That(result[i], Is.EqualTo(expectedResult[i]));
             }
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
         {
-            yield return new TestCaseData(new[] { 1, 2, 4 }, new[] { 1, 2, 4 });
-            yield return new TestCaseData(new[] { 4, 2, 3, 1 }, new[] { 1, 2, 3, 4 });
-            yield return new TestCaseData(new int[0], new int[0]);
-            yield return new TestCaseData(new[] { 1, 1, 1 }, new[] { 1, 1, 1 });
-            yield return new TestCaseData(new[] { 2, 1, 2 }, new[] { 2, 1, 2 });
+            yield return new TestCaseData(new[] { 1, 2, 4 });
+            yield return new TestCaseData(new[] { 4, 1, 2 });
+            yield return new TestCaseData(new[] { 4, 2, 3, 1 });
+            yield return new TestCaseData(new int[0]);
+            yield return new TestCaseData(new[] { 1, 1, 1 });
+            yield return new TestCaseData(new[] { 2, 1, 2 });
+            yield return new TestCaseData(new[] { 2, 1, 2, 5, 6, 2, 10, 31, 1, 234, 1, 74, 65});
         }
     }
 }
