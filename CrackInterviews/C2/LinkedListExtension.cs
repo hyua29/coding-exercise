@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace C2
 {
-    public static class LinkedListExtenstion
+    public static class LinkedListExtension
     {
         public static SinglyLinkedListNode ToLinkedList(this int[] array)
         {
