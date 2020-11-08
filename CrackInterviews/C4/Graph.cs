@@ -19,10 +19,11 @@ namespace C4
 
         public GraphNode<T> FindNode(Predicate<GraphNode<T>> predicate)
         {
+            var set = new HashSet<GraphNode<T>>();
             var queue = new Queue<GraphNode<T>>();
             foreach (var n in this.Nodes)
             {
-                n.HasVisited = true;
+                set.Add(n);
                 queue.Enqueue(n);
             }
 
@@ -33,9 +34,9 @@ namespace C4
                 
                 foreach (var n in node.AdjcentNodes)
                 {
-                    if (!n.HasVisited)
+                    if (!set.Contains(n))
                     {
-                        node.HasVisited = true;
+                        set.Add(n);
                         queue.Enqueue(n);
                     }
                 }
@@ -46,12 +47,13 @@ namespace C4
 
         public int GetSize()
         {
+            var set = new HashSet<GraphNode<T>>();
             int nodeCount = 0;
             var queue = new Queue<GraphNode<T>>();
             foreach (var n in this.Nodes)
             {
                 nodeCount++;
-                n.HasVisited = true;
+                set.Add(n);
                 queue.Enqueue(n);
             }
 
@@ -59,10 +61,10 @@ namespace C4
             {
                 foreach (var n in node.AdjcentNodes)
                 {
-                    if (!n.HasVisited)
+                    if (!set.Contains(n))
                     {
                         nodeCount++;
-                        node.HasVisited = true;
+                        set.Add(n);
                         queue.Enqueue(n);
                     }
                 }
@@ -73,32 +75,47 @@ namespace C4
 
         public GraphNode<T> GetArbitraryNode()
         {
+            var set = new HashSet<GraphNode<T>>();
             var size = this.GetSize();
             var nodeToGet = _random.Next(1, size);
+
+            GraphNode<T> nodeToReturn = null;
 
             var queue = new Queue<GraphNode<T>>();
             foreach (var n in this.Nodes)
             {
                 nodeToGet--;
-                n.HasVisited = true;
-                if (nodeToGet == 0) return n;
+                set.Add(n);
+                if (nodeToGet == 0)
+                {
+                    nodeToReturn = n;
+                    break;
+                }
                 queue.Enqueue(n);
             }
 
-            while (queue.TryDequeue(out var node))
+            if (nodeToReturn == null)
             {
-                foreach (var n in node.AdjcentNodes)
+                while (queue.TryDequeue(out var node))
                 {
-                    if (!n.HasVisited)
+                    foreach (var n in node.AdjcentNodes)
                     {
-                        nodeToGet--;
-                        if (nodeToGet == 0) return n;
-                        node.HasVisited = true;
-                        queue.Enqueue(n);
+                        if (!set.Contains(n))
+                        {
+                            nodeToGet--;
+                            if (nodeToGet == 0)
+                            {
+                                nodeToReturn = n;
+                                break;
+                            }
+                            set.Add(n);
+                            queue.Enqueue(n);
+                        }
                     }
-                }
+                }   
             }
-            return null;
+
+            return nodeToReturn;
         }
     }
 
@@ -109,6 +126,14 @@ namespace C4
         public void FindNode_Test(Graph<Guid> graph, Guid data, GraphNode<Guid> expectedResult)
         {
             Assert.That(graph.FindNode(node => node.Data.Equals(data)), Is.EqualTo(expectedResult));
+        }
+
+        [Test, Repeat(100)]
+        public void FindNode_GetArbitraryNode_Test()
+        {
+            var graph = GraphHelper.GenerateSingleDirectedGraphWithCycles();
+            // var node = graph.GetArbitraryNode();
+            // Assert.That(graph.FindNode(n => n == node), Is.EqualTo(node));
         }
         
         [Test]

@@ -1,37 +1,56 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using NUnit.Framework;
 
 namespace C4
 {
-    class RouteBetweenNodes
+    internal class RouteBetweenNodes
     {
-        internal static bool CalculateByDFS(GraphNode<Guid> node1, GraphNode<Guid> node2)
+        internal static bool CalculateByDFS<T>(GraphNode<T> currentNode, GraphNode<T> nodeToFind)
         {
-            if (node1 == node2)
+            if (currentNode == nodeToFind)
                 return true;
 
-            node1.HasVisited = true;
+            currentNode.HasVisited = true;
 
-            foreach (var n in node1.AdjcentNodes)
+            var nodeFound = false;
+            foreach (var n in currentNode.AdjcentNodes)
             {
-                if (n == node1) {
-                    return true;
-                }
-                
                 if (!n.HasVisited)
                 {
-                    RouteBetweenNodes.CalculateByDFS(n, node2);
+                    currentNode.HasVisited = true;
+                    if (CalculateByDFS(n, nodeToFind))
+                    {
+                        nodeFound = true;
+                        break;
+                    }
                 }
             }
 
-            return false;
+            return nodeFound;
         }
 
-        internal static bool CalculateByBFS(Graph<Guid> graph, GraphNode<Guid> node1, GraphNode<Guid> node2)
+        internal static bool CalculateByBFS<T>(GraphNode<T> root, GraphNode<T> nodeToFind)
         {
-            if (node1 == node2)
-                return true;
+            var queue = new Queue<GraphNode<T>>();
+            
+            queue.Enqueue(root);
+            root.HasVisited = true;
+
+            while (queue.TryDequeue(out var currentNode))
+            {
+                if (currentNode == nodeToFind) return true;
+
+                foreach (var n in currentNode.AdjcentNodes)
+                {
+                    if (!n.HasVisited)
+                    {
+                        n.HasVisited = true;
+                        queue.Enqueue(n);
+                    }
+                }
+            }
 
             return false;
         }
@@ -40,15 +59,40 @@ namespace C4
     [TestFixture]
     public class RouteBetweenNodesTest
     {
-        [TestCaseSource(nameof(GetTestData))]
-        public void RouteBetweenNodes_Test(Graph<Guid> graph, GraphNode<Guid> node1, GraphNode<Guid> node2, bool expectedResult)
+        [Test, Repeat(5)]
+        public void CalculateByDFS_Test()
         {
-            Assert.That(RouteBetweenNodes.CalculateByDFS(node1, node2), Is.EqualTo(expectedResult));
+            var timer = new Timer((e) => Assert.Fail("Test has taken to long; It is likely to be stuck in an infinite loop"), null, 5000, -1);
+            var graph1 = GraphHelper.GenerateSingleDirectedGraphWithNoCycle();
+            Assert.That(RouteBetweenNodes.CalculateByDFS(graph1.Nodes[0], graph1.GetArbitraryNode()), Is.EqualTo(true));
+
+            var graph2 = GraphHelper.GenerateSingleDirectedGraphWithNoCycle();
+            Assert.That(RouteBetweenNodes.CalculateByDFS(graph2.Nodes[0], new GraphNode<Guid>(Guid.NewGuid())), Is.EqualTo(false));
+
+            var graph3 = GraphHelper.GenerateSingleDirectedGraphWithCycles();
+            Assert.That(RouteBetweenNodes.CalculateByDFS(graph3.Nodes[0], graph3.GetArbitraryNode()), Is.EqualTo(true));
+            
+            var graph4 = GraphHelper.GenerateSingleDirectedGraphWithCycles();
+            Assert.That(RouteBetweenNodes.CalculateByDFS(graph4.Nodes[0], new GraphNode<Guid>(Guid.NewGuid())), Is.EqualTo(false));
         }
 
-        private static IEnumerable<TestCaseData> GetTestData()
+        [Test, Repeat(5)]
+        public void CalculateByBFS_Test()
         {
-            yield return new TestCaseData(1);
+            var timer = new Timer((e) => Assert.Fail("Test has taken to long; It is likely to be stuck in an infinite loop"), null, 5000, -1); 
+            var graph1 = GraphHelper.GenerateSingleDirectedGraphWithNoCycle();
+            Assert.That(RouteBetweenNodes.CalculateByBFS(graph1.Nodes[0], graph1.GetArbitraryNode()), Is.EqualTo(true));
+            
+            var graph2 = GraphHelper.GenerateSingleDirectedGraphWithNoCycle();
+            Assert.That(RouteBetweenNodes.CalculateByBFS(graph2.Nodes[0], new GraphNode<Guid>(Guid.NewGuid())), Is.EqualTo(false));
+            
+            var graph3 = GraphHelper.GenerateSingleDirectedGraphWithCycles();
+            Assert.That(RouteBetweenNodes.CalculateByBFS(graph3.Nodes[0], graph3.GetArbitraryNode()), Is.EqualTo(true));
+            
+            var graph4 = GraphHelper.GenerateSingleDirectedGraphWithCycles();
+            var size = graph4.GetSize();
+            Console.WriteLine(size);
+            Assert.That(RouteBetweenNodes.CalculateByBFS(graph4.Nodes[0], new GraphNode<Guid>(Guid.NewGuid())), Is.EqualTo(false));
         }
     }
 }

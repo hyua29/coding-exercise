@@ -8,41 +8,54 @@ namespace C4
     {
         private static readonly Random Random = new Random();
 
-        public static Graph<Guid> GenerateSingleDirectedGraphWithNoCycle(int depth = 10)
+        public static Graph<Guid> GenerateSingleDirectedGraphWithNoCycle(int depth = 8)
         {
             var root = new GraphNode<Guid>(Guid.NewGuid());
-            GraphHelper.GenerateNextLevelNoCycle(root, depth - 1);
+            GenerateNextLevelWithoutCycle(root, depth - 1);
 
-            return new Graph<Guid>(new List<GraphNode<Guid>>() {root});
+            return new Graph<Guid>(new List<GraphNode<Guid>> {root});
         }
 
-        public static Graph<Guid> GenerateDirectedGraphWithNoCycle(int depth = 10)
+        public static Graph<Guid> GenerateDirectedGraphWithNoCycle(int depth = 8)
         {
             var dummyNode = new GraphNode<Guid>(Guid.NewGuid());
-            GraphHelper.GenerateNextLevelNoCycle(dummyNode, depth);
+            GenerateNextLevelWithoutCycle(dummyNode, depth);
 
             return new Graph<Guid>(dummyNode.AdjcentNodes);
         }
-        
-        public static Graph<Guid> GenerateSingleDirectedGraphWithCycles(int depth = 10, int cycleCount = 2, int cyclePercentage = 10)
+
+        public static Graph<Guid> GenerateSingleDirectedGraphWithCycles(
+            int depth = 8,
+            int cycleCount = 2,
+            int cyclePercentage = 10)
         {
             var root = new GraphNode<Guid>(Guid.NewGuid());
-            var nodeList = new List<GraphNode<Guid>>() { root };
-            GraphHelper.GenerateNextLevelHasCycles(root, nodeList, depth - 1, cycleCount, cyclePercentage);
+            var nodeList = new List<GraphNode<Guid>> {root};
+            int cycleCountCopy = cycleCount;
+            GenerateNextLevelWithCycles(root, nodeList, depth - 1, ref cycleCountCopy, cyclePercentage);
 
-            return new Graph<Guid>(new List<GraphNode<Guid>>() { root });
+            return new Graph<Guid>(new List<GraphNode<Guid>> {root});
         }
 
-        public static Graph<Guid> GenerateDirectedGraphWithCycles(int depth = 10, int cycleCount = 2, int cyclePercentage = 10)
+        public static Graph<Guid> GenerateDirectedGraphWithCycles(
+            int depth = 8,
+            int cycleCount = 2,
+            int cyclePercentage = 10)
         {
             var nodeList = new List<GraphNode<Guid>>();
             var dummyNode = new GraphNode<Guid>(Guid.NewGuid());
-            GraphHelper.GenerateNextLevelHasCycles(dummyNode, nodeList, depth, cycleCount, cyclePercentage);
+            int cycleCountCopy = cycleCount;
+            GenerateNextLevelWithCycles(dummyNode, nodeList, depth, ref cycleCountCopy, cyclePercentage);
 
             return new Graph<Guid>(dummyNode.AdjcentNodes);
         }
 
-        private static void GenerateNextLevelHasCycles(GraphNode<Guid> node, IList<GraphNode<Guid>> nodeList, int remainedDepth, int cycleCount, int cyclePercentage)
+        private static void GenerateNextLevelWithCycles(
+            GraphNode<Guid> node,
+            IList<GraphNode<Guid>> nodeList,
+            int remainedDepth,
+            ref int cycleCount,
+            int cyclePercentage)
         {
             // Total depth might go over remained depth if cycle count has not reached 0 
             if (remainedDepth < 1 && cycleCount < 1) return;
@@ -51,12 +64,11 @@ namespace C4
 
             // Each node has 0 to 10 adjacent nodes
             var adjNodeCount = Random.Next(0, 10);
-            for (int i = 0; i < adjNodeCount; i++)
+            for (var i = 0; i < adjNodeCount; i++)
             {
-                var hasCycle = Random.Next(1, 100) < cyclePercentage;
-                if (hasCycle)
+                if (nodeList.Count > 1 && Random.Next(1, 100) < cyclePercentage)
                 {
-                    // Add an arbitrary existing node to current node to form a cycle  
+                    // Add an arbitrary existing node to current node to form a cycle; Repeat if the arbitrary node retrieved is the same as current node
                     GraphNode<Guid> existingNode = null;
                     do
                     {
@@ -71,22 +83,22 @@ namespace C4
                     var childNode = new GraphNode<Guid>(Guid.NewGuid());
                     node.AdjcentNodes.Add(childNode);
                     nodeList.Add(childNode);
-                    GraphHelper.GenerateNextLevelHasCycles(childNode, nodeList, remainedDepth, cycleCount, cyclePercentage);   
+                    GenerateNextLevelWithCycles(childNode, nodeList, remainedDepth, ref cycleCount, cyclePercentage);
                 }
             }
         }
 
-        private static void GenerateNextLevelNoCycle(GraphNode<Guid> node, int remainedDepth)
+        private static void GenerateNextLevelWithoutCycle(GraphNode<Guid> node, int remainedDepth)
         {
             if (remainedDepth < 1) return;
 
             remainedDepth--;
-            var adjNodeCount = Random.Next(10);
-            for (int i = 0; i < adjNodeCount; i++)
+            var adjNodeCount = Random.Next(0, 10);
+            for (var i = 0; i < adjNodeCount; i++)
             {
                 var childNode = new GraphNode<Guid>(Guid.NewGuid());
                 node.AdjcentNodes.Add(childNode);
-                GraphHelper.GenerateNextLevelNoCycle(childNode, remainedDepth);
+                GenerateNextLevelWithoutCycle(childNode, remainedDepth);
             }
         }
     }
@@ -94,15 +106,17 @@ namespace C4
     [TestFixture]
     public class GraphHelperTests
     {
+        [Test]
         public void GenerateSingleDirectedGraphWithNoCycle_Test()
         {
-            var graph = GraphHelper.GenerateSingleDirectedGraphWithNoCycle(15);
+            var graph = GraphHelper.GenerateSingleDirectedGraphWithNoCycle();
             Assert.That(graph.Nodes.Count, Is.EqualTo(1));
         }
-        
+
+        [Test]
         public void GenerateSingleDirectedGraphWithCycles_Test()
         {
-            var graph = GraphHelper.GenerateSingleDirectedGraphWithCycles(15);
+            var graph = GraphHelper.GenerateSingleDirectedGraphWithCycles();
             Assert.That(graph.Nodes.Count, Is.EqualTo(1));
         }
     }
