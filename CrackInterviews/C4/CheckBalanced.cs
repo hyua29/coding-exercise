@@ -21,7 +21,7 @@ namespace C4
             var leftHeight = GetHeight(node.LeftNode, ref isBalanced);
             var rightHeight = GetHeight(node.RightNode, ref isBalanced);
             if (isBalanced) isBalanced = Math.Abs(leftHeight - rightHeight) <= 1;
-            
+
             var height = Math.Max(leftHeight, rightHeight) + 1;
             return height;
         }
@@ -40,17 +40,23 @@ namespace C4
         {
             yield return new TestCaseData(null, false);
             yield return new TestCaseData(new BinaryTreeNode<int>(1), true);
-            
-            var node1 = new BinaryTreeNode<int>(1) { LeftNode = new BinaryTreeNode<int>(1)};
+
+            var node1 = new BinaryTreeNode<int>(1) {LeftNode = new BinaryTreeNode<int>(1)};
             yield return new TestCaseData(node1, true);
-            
-            var node2 = new BinaryTreeNode<int>(1) { LeftNode = new BinaryTreeNode<int>(1), RightNode = new BinaryTreeNode<int>(1)};
+
+            var node2 = new BinaryTreeNode<int>(1)
+                {LeftNode = new BinaryTreeNode<int>(1), RightNode = new BinaryTreeNode<int>(1)};
             yield return new TestCaseData(node2, true);
-            
-            var node3 = new BinaryTreeNode<int>(1) { LeftNode = new BinaryTreeNode<int>(1) { LeftNode = new BinaryTreeNode<int>(1)}, RightNode = new BinaryTreeNode<int>(1)};
+
+            var node3 = new BinaryTreeNode<int>(1)
+            {
+                LeftNode = new BinaryTreeNode<int>(1) {LeftNode = new BinaryTreeNode<int>(1)},
+                RightNode = new BinaryTreeNode<int>(1)
+            };
             yield return new TestCaseData(node3, true);
-            
-            var node4 = new BinaryTreeNode<int>(1) { LeftNode = new BinaryTreeNode<int>(1) { LeftNode = new BinaryTreeNode<int>(1)}};
+
+            var node4 = new BinaryTreeNode<int>(1)
+                {LeftNode = new BinaryTreeNode<int>(1) {LeftNode = new BinaryTreeNode<int>(1)}};
             yield return new TestCaseData(node4, false);
         }
     }
