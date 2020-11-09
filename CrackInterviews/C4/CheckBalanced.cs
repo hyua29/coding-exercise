@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace C4
 {
-    public class CheckBalanced
+    internal class CheckBalanced
     {
         internal static bool Calculate(BinaryTreeNode<int> root)
         {

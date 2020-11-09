@@ -1,6 +1,6 @@
 namespace C4
 {
-    public class MinimalTree
+    internal class MinimalTree
     {
         internal static BinaryTreeNode<int> GetMinimalTree(int[] sortedArray)
         {
