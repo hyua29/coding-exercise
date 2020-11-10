@@ -13,15 +13,25 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=790bf2c9_002D0945_002D473a_002D8887_002D4a2895dc55aa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GraphHelperTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;Or&gt;&#xD;
+      &lt;Or&gt;&#xD;
+        &lt;TestAncestor&gt;&#xD;
+          &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.GraphHelperTests&lt;/TestId&gt;&#xD;
+        &lt;/TestAncestor&gt;&#xD;
+        &lt;TestAncestor&gt;&#xD;
+          &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.CheckBalancedTests&lt;/TestId&gt;&#xD;
+        &lt;/TestAncestor&gt;&#xD;
+      &lt;/Or&gt;&#xD;
       &lt;TestAncestor&gt;&#xD;
-        &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.GraphHelperTests&lt;/TestId&gt;&#xD;
-      &lt;/TestAncestor&gt;&#xD;
-      &lt;TestAncestor&gt;&#xD;
-        &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.CheckBalancedTests&lt;/TestId&gt;&#xD;
+        &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.ValidateBSTTests.Calculate_Test&lt;/TestId&gt;&#xD;
       &lt;/TestAncestor&gt;&#xD;
     &lt;/Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.ValidateBSTTests.Calculate_Test&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.ValidateBSTTests&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
   &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=85bb80d1_002D4548_002D428a_002Da1da_002D32a7a777ca4a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Calculate_Test #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.ValidateBSTTests.Calculate_Test&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
