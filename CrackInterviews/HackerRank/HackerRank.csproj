@@ -12,11 +12,4 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Compile Remove="NotUsed.cs" />
-        <Compile Remove="dir1\NotUsed1.cs" />
-        <Compile Remove="dir1\NotUsed2.cs" />
-        <Compile Remove="dir2\NotUsed3.cs" />
-        <Compile Remove="dir2\NotUsed4.cs" />
-    </ItemGroup>
 </Project>
