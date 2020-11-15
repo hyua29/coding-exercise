@@ -128,12 +128,12 @@ namespace C4
             Assert.That(graph.FindNode(node => node.Data.Equals(data)), Is.EqualTo(expectedResult));
         }
 
-        [Test, Repeat(100)]
+        [Test, Repeat(5)]
         public void FindNode_GetArbitraryNode_Test()
         {
             var graph = GraphHelper.GenerateSingleDirectedGraphWithCycles();
-            // var node = graph.GetArbitraryNode();
-            // Assert.That(graph.FindNode(n => n == node), Is.EqualTo(node));
+            var node = graph.GetArbitraryNode();
+            Assert.That(graph.FindNode(n => n == node), Is.EqualTo(node));
         }
         
         [Test]

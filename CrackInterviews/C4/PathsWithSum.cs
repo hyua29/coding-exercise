@@ -69,7 +69,10 @@ namespace C4
                         RightNode = new BinaryTreeNode<int>(1)
                     }
                 }, 
-                RightNode = new BinaryTreeNode<int>(-3) { RightNode = new BinaryTreeNode<int>(11) }
+                RightNode = new BinaryTreeNode<int>(-3)
+                {
+                    RightNode = new BinaryTreeNode<int>(11)
+                }
             }, 8, 3);
         }
     }
