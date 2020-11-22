@@ -34,31 +34,16 @@ namespace C4
         [TestCaseSource(nameof(GetTestData))]
         public void Calculate_Test(string[] project, IList<BuildDependency> dependencies, IList<string> expectedResult)
         {
-            Assert.That(BuildOrder.Calculate(project, dependencies), Is.EqualTo(expectedResult));
+            var result = BuildOrder.Calculate(project, dependencies);
+            for (int i = 0; i < result.Count; i++)
+            {
+                Assert.That(result[i], Is.EqualTo(expectedResult[i]));   
+            }
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
         {
-            yield return new TestCaseData(null, 8, 0);
-            yield return new TestCaseData(new BinaryTreeNode<int>(10)
-            {
-                LeftNode = new BinaryTreeNode<int>(5)
-                {
-                    LeftNode = new BinaryTreeNode<int>(3)
-                    {
-                        LeftNode = new BinaryTreeNode<int>(3),
-                        RightNode = new BinaryTreeNode<int>(-2)
-                    },
-                    RightNode = new BinaryTreeNode<int>(2)
-                    {
-                        RightNode = new BinaryTreeNode<int>(1)
-                    }
-                },
-                RightNode = new BinaryTreeNode<int>(-3)
-                {
-                    RightNode = new BinaryTreeNode<int>(11)
-                }
-            }, 8, 3);
+           yield return new TestCaseData(null, null, new List<string>());
         }
     }
 }
