@@ -65,6 +65,7 @@ namespace HackerRank
         }
     }
 
+    [TestFixture]
     public class AlmostSortedTests
     {
         [TestCaseSource(nameof(GetTestCaseData))]
