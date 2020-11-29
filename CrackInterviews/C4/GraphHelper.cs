@@ -31,7 +31,7 @@ namespace C4
         {
             var root = new GraphNode<Guid>(Guid.NewGuid());
             var nodeList = new List<GraphNode<Guid>> {root};
-            int cycleCountCopy = cycleCount;
+            var cycleCountCopy = cycleCount;
             GenerateNextLevelWithCycles(root, nodeList, depth - 1, ref cycleCountCopy, cyclePercentage);
 
             return new Graph<Guid>(new List<GraphNode<Guid>> {root});
@@ -44,7 +44,7 @@ namespace C4
         {
             var nodeList = new List<GraphNode<Guid>>();
             var dummyNode = new GraphNode<Guid>(Guid.NewGuid());
-            int cycleCountCopy = cycleCount;
+            var cycleCountCopy = cycleCount;
             GenerateNextLevelWithCycles(dummyNode, nodeList, depth, ref cycleCountCopy, cyclePercentage);
 
             return new Graph<Guid>(dummyNode.AdjcentNodes);
@@ -65,7 +65,6 @@ namespace C4
             // Each node has 0 to 10 adjacent nodes
             var adjNodeCount = Random.Next(0, 10);
             for (var i = 0; i < adjNodeCount; i++)
-            {
                 if (nodeList.Count > 1 && Random.Next(1, 100) < cyclePercentage)
                 {
                     // Add an arbitrary existing node to current node to form a cycle; Repeat if the arbitrary node retrieved is the same as current node
@@ -85,7 +84,6 @@ namespace C4
                     nodeList.Add(childNode);
                     GenerateNextLevelWithCycles(childNode, nodeList, remainedDepth, ref cycleCount, cyclePercentage);
                 }
-            }
         }
 
         private static void GenerateNextLevelWithoutCycle(GraphNode<Guid> node, int remainedDepth)

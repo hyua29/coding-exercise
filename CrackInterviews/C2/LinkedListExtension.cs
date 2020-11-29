@@ -7,14 +7,11 @@ namespace C2
     {
         public static SinglyLinkedListNode ToLinkedList(this int[] array)
         {
-            if (array == null)
-            {
-                return null;
-            }
+            if (array == null) return null;
 
             var dummyHead = new SinglyLinkedListNode();
             var current = dummyHead;
-            for (int i = 0; i < array.Count(); i++)
+            for (var i = 0; i < array.Count(); i++)
             {
                 current.Next = new SinglyLinkedListNode(i) {Data = array[i]};
                 current = current.Next;
@@ -37,16 +34,10 @@ namespace C2
 
         public static SinglyLinkedListNode GetLastNode(this SinglyLinkedListNode node)
         {
-            if (node == null)
-            {
-                return null;
-            }
+            if (node == null) return null;
 
             var current = node;
-            while (current.Next != null)
-            {
-                current = current.Next;
-            }
+            while (current.Next != null) current = current.Next;
 
             return current;
         }

@@ -9,7 +9,7 @@ namespace C4
         public static bool Calculate(BinaryTreeNode<int> root)
         {
             if (root == null) return false;
-            bool isBalanced = true;
+            var isBalanced = true;
             GetHeight(root, ref isBalanced);
             return isBalanced;
         }

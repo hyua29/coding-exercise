@@ -4,27 +4,27 @@ namespace C4
 {
     public class GraphNode<T>
     {
-        public T Data { get; }
-
-        public IList<GraphNode<T>> AdjcentNodes { get; private set; }
-
         public bool HasVisited;
 
         public GraphNode(T data)
         {
-            this.Data = data;
-            this.AdjcentNodes = new List<GraphNode<T>>();
-            this.HasVisited = false;
+            Data = data;
+            AdjcentNodes = new List<GraphNode<T>>();
+            HasVisited = false;
         }
 
         public GraphNode(T data, IList<GraphNode<T>> adjcentNodes) : this(data)
         {
-            this.AdjcentNodes = adjcentNodes;
+            AdjcentNodes = adjcentNodes;
         }
+
+        public T Data { get; }
+
+        public IList<GraphNode<T>> AdjcentNodes { get; }
 
         public override string ToString()
         {
-            return this.Data.ToString();
+            return Data.ToString();
         }
     }
 }

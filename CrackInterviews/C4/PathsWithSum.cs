@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -18,10 +17,10 @@ namespace C4
         {
             if (node == null) return 0;
 
-            int pathFromCurrent = GetPathsFromNode(node, sum, 0);
+            var pathFromCurrent = GetPathsFromNode(node, sum, 0);
 
-            int pathFromLeft = GetPaths(node.LeftNode, sum);
-            int pathFromRight = GetPaths(node.RightNode, sum);
+            var pathFromLeft = GetPaths(node.LeftNode, sum);
+            var pathFromRight = GetPaths(node.RightNode, sum);
 
             return pathFromCurrent + pathFromLeft + pathFromRight;
         }
@@ -29,10 +28,10 @@ namespace C4
         private static int GetPathsFromNode(BinaryTreeNode<int> node, int targerSum, int currentSum)
         {
             if (node == null) return 0;
-            
-            int newSum = currentSum + node.Data;
-            
-            int pathCount = 0;
+
+            var newSum = currentSum + node.Data;
+
+            var pathCount = 0;
             if (newSum == targerSum) pathCount++;
 
             pathCount += GetPathsFromNode(node.LeftNode, targerSum, newSum);
@@ -40,7 +39,6 @@ namespace C4
 
             return pathCount;
         }
-
     }
 
     [TestFixture]
@@ -68,7 +66,7 @@ namespace C4
                     {
                         RightNode = new BinaryTreeNode<int>(1)
                     }
-                }, 
+                },
                 RightNode = new BinaryTreeNode<int>(-3)
                 {
                     RightNode = new BinaryTreeNode<int>(11)

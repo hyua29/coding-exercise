@@ -10,15 +10,15 @@ namespace Searching
             if (sortedArray == null || sortedArray.Length == 0)
                 return false;
 
-            int left = 0;
-            int right = sortedArray.Length - 1;
+            var left = 0;
+            var right = sortedArray.Length - 1;
 
             while (left <= right)
             {
-                int mid = (left + right) / 2;
+                var mid = (left + right) / 2;
                 if (sortedArray[mid] == value)
                     return true;
-                else if (sortedArray[mid] < value)
+                if (sortedArray[mid] < value)
                     left = mid + 1;
                 else
                     right = mid - 1;
@@ -30,20 +30,20 @@ namespace Searching
         [TestCaseSource(nameof(GetTestData))]
         public void Test1(int[] sortedArray, int value, bool expectedFound)
         {
-            Assert.That(BinarySearch.Calculate1(sortedArray, value), Is.EqualTo(expectedFound));
+            Assert.That(Calculate1(sortedArray, value), Is.EqualTo(expectedFound));
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
         {
-            yield return new TestCaseData(new [] {1, 2, 4}, 2, true);
-            yield return new TestCaseData(new [] {1, 2, 2, 4}, 2, true);
-            yield return new TestCaseData(new [] {1, 2, 3}, 3, true);
-            yield return new TestCaseData(new [] {1, 2, 4}, 1, true);
-            yield return new TestCaseData(new [] {1, 2, 4}, 3, false);
-            yield return new TestCaseData(new [] {1, 2, 5, 8}, 1, true);
-            yield return new TestCaseData(new [] {1, 2, 5, 8}, 8, true);
-            yield return new TestCaseData(new [] {1, 2, 5, 8}, 6, false);
-            yield return new TestCaseData(new [] {1, 2, 5, 8}, 3, false);
+            yield return new TestCaseData(new[] {1, 2, 4}, 2, true);
+            yield return new TestCaseData(new[] {1, 2, 2, 4}, 2, true);
+            yield return new TestCaseData(new[] {1, 2, 3}, 3, true);
+            yield return new TestCaseData(new[] {1, 2, 4}, 1, true);
+            yield return new TestCaseData(new[] {1, 2, 4}, 3, false);
+            yield return new TestCaseData(new[] {1, 2, 5, 8}, 1, true);
+            yield return new TestCaseData(new[] {1, 2, 5, 8}, 8, true);
+            yield return new TestCaseData(new[] {1, 2, 5, 8}, 6, false);
+            yield return new TestCaseData(new[] {1, 2, 5, 8}, 3, false);
         }
     }
 }

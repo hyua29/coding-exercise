@@ -4,23 +4,19 @@ using NUnit.Framework;
 namespace C1
 {
     [TestFixture]
-    class IsUnique
+    internal class IsUnique
     {
-        static bool Calculate1(string input)
+        private static bool Calculate1(string input)
         {
             if (input == null)
                 return true;
-            
+
             var set = new HashSet<char>();
-            foreach(var i in input)
-            {
+            foreach (var i in input)
                 if (!set.Contains(i))
-                {
                     set.Add(i);
-                } else {
+                else
                     return false;
-                }
-            }
             return true;
         }
 
@@ -29,19 +25,19 @@ namespace C1
         [TestCase("qwewradsfcaxz")]
         public void IsUniqueTest(string input)
         {
-            Assert.False(IsUnique.Calculate1(input));
+            Assert.False(Calculate1(input));
         }
-        
+
         [TestCase("")]
         public void IsUniqueEmptyTest(string input)
         {
-            Assert.True(IsUnique.Calculate1(input));
+            Assert.True(Calculate1(input));
         }
-        
+
         [TestCase("qwerasdf")]
         public void IsUniquePassTest(string input)
         {
-            Assert.True(IsUnique.Calculate1(input));
+            Assert.True(Calculate1(input));
         }
     }
 }

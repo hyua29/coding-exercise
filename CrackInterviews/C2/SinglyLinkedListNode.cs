@@ -2,21 +2,20 @@ namespace C2
 {
     public class SinglyLinkedListNode
     {
-        public int Id { get; }
-
-        public int Data { get; set; }
-
-        public SinglyLinkedListNode Next { get; set; }
-
         public SinglyLinkedListNode()
         {
-
         }
 
         public SinglyLinkedListNode(int id)
         {
             Id = id;
         }
+
+        public int Id { get; }
+
+        public int Data { get; set; }
+
+        public SinglyLinkedListNode Next { get; set; }
 
         public override string ToString()
         {

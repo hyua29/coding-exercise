@@ -5,7 +5,6 @@ namespace HackerRank
         public static void Initialize(string s)
         {
             // This function is called once before all queries.
-
         }
 
         public static int AnswerQuery(int l, int r)
@@ -16,14 +15,15 @@ namespace HackerRank
 
         private static bool IsPerlinedome(string input)
         {
-            int left = 0;
-            int right = input.Length - 1;
+            var left = 0;
+            var right = input.Length - 1;
             while (left <= right)
             {
                 if (input[left] != input[right]) return false;
                 left++;
                 right++;
             }
+
             return true;
         }
     }

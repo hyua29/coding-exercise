@@ -1,40 +1,35 @@
-using System.Collections.Generic;
 using NUnit.Framework;
-using System.Linq;
 
 namespace C1
 {
     [TestFixture]
-    class CheckPermutation
+    internal class CheckPermutation
     {
-        static bool Calculate1(string input1, string input2)
+        private static bool Calculate1(string input1, string input2)
         {
             if (input1 == null && input2 == null)
                 return true;
-            
+
             if (input1 == null)
                 return false;
-            
+
             if (input2 == null)
                 return false;
-            
+
             if (input1.Length != input2.Length)
                 return false;
-            
+
             var buffer = new int[128];
-            
-            foreach (char i in input1)
+
+            foreach (var i in input1) buffer[i]++;
+
+            foreach (var i in input2)
             {
-                buffer[(int)i]++;
-            }
-            
-            foreach (char i in input2)
-            {
-                buffer[(int)i]--;
-                if (buffer[(int)i] < 0)
+                buffer[i]--;
+                if (buffer[i] < 0)
                     return false;
             }
-            
+
             return true;
         }
 
@@ -44,7 +39,7 @@ namespace C1
         [TestCase(null, null)]
         public void CheckPermutationSuccessfulTest(string input1, string input2)
         {
-            Assert.True(CheckPermutation.Calculate1(input1, input2));
+            Assert.True(Calculate1(input1, input2));
         }
 
         [TestCase("asdfghjkl;'", "'as;dlsfkgjh")]
@@ -53,7 +48,7 @@ namespace C1
         [TestCase(null, "as")]
         public void CheckPermutationFailedTest(string input1, string input2)
         {
-            Assert.False(CheckPermutation.Calculate1(input1, input2));
+            Assert.False(Calculate1(input1, input2));
         }
     }
 }

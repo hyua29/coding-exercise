@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -13,12 +13,11 @@ namespace HackerRank
 
             var sortedArr = arr.OrderBy(x => x).ToArray();
 
-            int outOfOrderCount = 0;
-            int outOfOrderStart = -1;
-            int outOfOrderEnd = -1;
-            bool isContinuous = true;
+            var outOfOrderCount = 0;
+            var outOfOrderStart = -1;
+            var outOfOrderEnd = -1;
+            var isContinuous = true;
             for (var i = 0; i < arr.Length; i++)
-            {
                 if (arr[i] != sortedArr[i])
                 {
                     isContinuous = outOfOrderEnd == -1 || outOfOrderEnd == i - 1;
@@ -26,7 +25,6 @@ namespace HackerRank
                     outOfOrderEnd = i;
                     outOfOrderCount++;
                 }
-            }
 
             if (outOfOrderCount == 0)
             {
@@ -39,7 +37,7 @@ namespace HackerRank
             }
             else if (isContinuous)
             {
-                bool canBeSorted = true;
+                var canBeSorted = true;
                 var offset = 0;
                 for (var i = outOfOrderStart; i <= outOfOrderEnd; i++)
                 {
@@ -76,7 +74,7 @@ namespace HackerRank
 
         public static IEnumerable<TestCaseData> GetTestCaseData()
         {
-            yield return new TestCaseData(new int[] { 1, 5, 4, 3, 2, 6 });
+            yield return new TestCaseData(new[] {1, 5, 4, 3, 2, 6});
         }
     }
 }

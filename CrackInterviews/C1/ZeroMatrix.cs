@@ -38,89 +38,89 @@ namespace C1
         [TestCaseSource(nameof(GetTestData))]
         public int[,] ZeroMatrixTest(int[,] input)
         {
-            int[,] result = Calculate1(input);
+            var result = Calculate1(input);
             return result;
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
         {
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
                     {1, 2},
                     {0, 1},
                     {3, 1}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {0, 2},
                     {0, 0},
                     {0, 1}
                 });
-            
+
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
                     {1, 0},
                     {0, 1},
                     {3, 1}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {0, 0},
                     {0, 0},
                     {0, 0}
                 });
-            
+
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
                     {1, 0}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {0, 0}
                 });
-            
+
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
                     {1},
                     {0},
                     {3}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {0},
                     {0},
                     {0}
                 });
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
-                    {1},
+                    {1}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {1}
                 });
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
-                    {0},
+                    {0}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {0}
                 });
             yield return new TestCaseData(
-                new int[,]
+                new[,]
                 {
                     {0, 1},
                     {1, 1},
                     {3, 1}
                 }).Returns(
-                new int[,]
+                new[,]
                 {
                     {0, 0},
                     {0, 1},

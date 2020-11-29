@@ -10,7 +10,7 @@ namespace HackerRank
         {
             if (gene == null) return 0;
 
-            var dict = new Dictionary<char, int>()
+            var dict = new Dictionary<char, int>
             {
                 {'A', 0},
                 {'T', 0},
@@ -18,19 +18,15 @@ namespace HackerRank
                 {'G', 0}
             };
 
-            foreach (var c in gene)
-            {
-                dict[c] = dict[c] + 1;
-            }
+            foreach (var c in gene) dict[c] = dict[c] + 1;
 
-            int factor = gene.Length / 4;
+            var factor = gene.Length / 4;
             if (IsBalanced(factor, dict)) return 0;
 
             var minChange = int.MaxValue;
             var low = 0;
             var high = 0;
             while (high < gene.Length)
-            {
                 if (!IsBalanced(factor, dict))
                 {
                     dict[gene[high]] = dict[gene[high]] - 1;
@@ -42,7 +38,6 @@ namespace HackerRank
                     dict[gene[low]] = dict[gene[low]] + 1;
                     low++;
                 }
-            }
 
             return minChange;
         }
@@ -68,5 +63,4 @@ namespace HackerRank
             yield return new TestCaseData("TGATGCCGTCCCCTCAACTTGAGTGCTCCTAATGCGTTGC", 5);
         }
     }
-
 }

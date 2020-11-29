@@ -1,15 +1,10 @@
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using System.Linq;
-using System.Text;
 
 namespace C2
 {
     [TestFixture]
-    class LoopDetection
+    internal class LoopDetection
     {
         public static SinglyLinkedListNode Calculate1(SinglyLinkedListNode head)
         {
@@ -23,10 +18,7 @@ namespace C2
 
             while (slow != null && fast != null)
             {
-                if (hasStarted && slow == fast)
-                {
-                    break;
-                }
+                if (hasStarted && slow == fast) break;
 
                 slow = slow.Next;
                 fast = fast.Next?.Next;
@@ -48,10 +40,10 @@ namespace C2
             return pointer;
         }
 
-        [TestCaseSource(nameof(LoopDetection.GetTestData))]
+        [TestCaseSource(nameof(GetTestData))]
         public void LoopDetectionTest(SinglyLinkedListNode head, SinglyLinkedListNode expectedNode)
         {
-            var result = LoopDetection.Calculate1(head);
+            var result = Calculate1(head);
             if (head == null)
                 Assert.IsNull(result);
 
