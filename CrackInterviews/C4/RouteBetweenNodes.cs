@@ -5,9 +5,9 @@ using NUnit.Framework;
 
 namespace C4
 {
-    internal class RouteBetweenNodes
+    public class RouteBetweenNodes
     {
-        internal static bool CalculateByDFS<T>(GraphNode<T> currentNode, GraphNode<T> nodeToFind)
+        public static bool CalculateByDFS<T>(GraphNode<T> currentNode, GraphNode<T> nodeToFind)
         {
             if (currentNode == nodeToFind)
                 return true;
@@ -31,7 +31,7 @@ namespace C4
             return nodeFound;
         }
 
-        internal static bool CalculateByBFS<T>(GraphNode<T> root, GraphNode<T> nodeToFind)
+        public static bool CalculateByBFS<T>(GraphNode<T> root, GraphNode<T> nodeToFind)
         {
             var queue = new Queue<GraphNode<T>>();
             

@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace C4
 {
-    internal class PathsWithSum
+    public class PathsWithSum
     {
-        internal static int Calculate(BinaryTreeNode<int> root, int sum)
+        public static int Calculate(BinaryTreeNode<int> root, int sum)
         {
             if (root == null) return 0;
 

@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace C4
 {
-    internal class ValidateBST
+    public class ValidateBST
     {
-        internal static bool Calculate(BinaryTreeNode<int> root)
+        public static bool Calculate(BinaryTreeNode<int> root)
         {
             if (root == null) return false;
 
@@ -20,7 +20,7 @@ namespace C4
         /// <param name="min"></param> Data of current node must be greater than min
         /// <param name="max"></param> Data of current node must be smaller or equal to max
         /// <returns>True if the current node and its children meet all BST constraints </returns>
-        internal static bool IsBST(BinaryTreeNode<int> node, int min, int max)
+        public static bool IsBST(BinaryTreeNode<int> node, int min, int max)
         {
             if (node == null) return true;
             Console.WriteLine($"current data is: {node.Data}; current min: {min}; current max: {max}" );

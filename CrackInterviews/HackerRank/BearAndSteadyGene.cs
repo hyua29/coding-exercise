@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace HackerRank
 {
-    internal class BearAndSteadyGene
+    public class BearAndSteadyGene
     {
-        internal static int Calculate(string gene)
+        public static int Calculate(string gene)
         {
             if (gene == null) return 0;
 
@@ -47,7 +47,7 @@ namespace HackerRank
             return minChange;
         }
 
-        internal static bool IsBalanced(int factor, IDictionary<char, int> dict)
+        public static bool IsBalanced(int factor, IDictionary<char, int> dict)
         {
             return dict['A'] <= factor && dict['T'] <= factor && dict['C'] <= factor && dict['G'] <= factor;
         }

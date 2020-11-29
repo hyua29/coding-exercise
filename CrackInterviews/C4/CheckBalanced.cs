@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace C4
 {
-    internal class CheckBalanced
+    public class CheckBalanced
     {
-        internal static bool Calculate(BinaryTreeNode<int> root)
+        public static bool Calculate(BinaryTreeNode<int> root)
         {
             if (root == null) return false;
             bool isBalanced = true;
@@ -14,7 +14,7 @@ namespace C4
             return isBalanced;
         }
 
-        internal static int GetHeight(BinaryTreeNode<int> node, ref bool isBalanced)
+        public static int GetHeight(BinaryTreeNode<int> node, ref bool isBalanced)
         {
             if (node == null) return 0;
 

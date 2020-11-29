@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace HackerRank
 {
-    internal class FormingMagicSquare
+    public class FormingMagicSquare
     {
-        internal static int Calculate(int[][] s)
+        public static int Calculate(int[][] s)
         {
             var possiblePermutations = new List<int[,]>()
             {

@@ -5,9 +5,9 @@ using NUnit.Framework;
 
 namespace HackerRank
 {
-    internal class AlmostSorted
+    public class AlmostSorted
     {
-        internal static void Calculate(int[] arr)
+        public static void Calculate(int[] arr)
         {
             if (arr == null) Console.WriteLine("no");
 

@@ -1,8 +1,8 @@
 namespace C4
 {
-    internal class MinimalTree
+    public class MinimalTree
     {
-        internal static BinaryTreeNode<int> GetMinimalTree(int[] sortedArray)
+        public static BinaryTreeNode<int> GetMinimalTree(int[] sortedArray)
         {
             return AttachChildren(sortedArray, 0, sortedArray.Length - 1);
         }

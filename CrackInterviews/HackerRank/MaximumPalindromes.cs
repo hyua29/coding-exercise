@@ -1,14 +1,14 @@
 namespace HackerRank
 {
-    internal class MaximumPalindromes
+    public class MaximumPalindromes
     {
-        internal static void Initialize(string s)
+        public static void Initialize(string s)
         {
             // This function is called once before all queries.
 
         }
 
-        internal static int AnswerQuery(int l, int r)
+        public static int AnswerQuery(int l, int r)
         {
             // Return the answer for this query modulo 1000000007.
             return 0;
