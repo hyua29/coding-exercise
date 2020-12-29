@@ -12,7 +12,7 @@ namespace C8
 
             var result = new List<IList<string>>();
 
-            if (array.Length == 1) return result;
+            if (array.Length == 0) return result;
 
             var tempResult = new List<string>();
             var dict = BuildDictionary(array);
