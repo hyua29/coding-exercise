@@ -32,3 +32,6 @@ class TripleStepTests(unittest.TestCase):
         result = solution(steps)
         self.assertEqual(result, expected_result)
 
+
+if __name__ == "__main__":
+    unittest.main()

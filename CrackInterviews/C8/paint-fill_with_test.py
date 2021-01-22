@@ -37,3 +37,7 @@ class PaintFillTest(unittest.TestCase):
         for row in grid:
             for value in row:
                 self.assertEqual(new_color, value)
+
+
+if __name__ == "__main__":
+    unittest.main()
