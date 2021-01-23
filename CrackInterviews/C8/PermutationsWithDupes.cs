@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -47,7 +48,9 @@ namespace C8
                 if (count > 0)
                 {
                     dict[key] = count - 1;
+                    tempResult.Add(key);
                     CalculateAux(dict, array, remaining - 1, result, tempResult);
+                    tempResult.RemoveAt(tempResult.Count - 1);
                     dict[key] = count;
                 }
             }
@@ -71,8 +74,10 @@ namespace C8
 
             for (int i = 0; i < result.Count; i++)
             {
+                Assert.That(result[i].Count, Is.EqualTo(expectedResult[i].Count));
                 for (int j = 0; j < result[i].Count; j++)
                 {
+                    Console.WriteLine(result[i][j]);
                     Assert.That(result[i][j], Is.EqualTo(expectedResult[i][j]));
                 }
             }

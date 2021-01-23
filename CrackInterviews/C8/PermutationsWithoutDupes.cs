@@ -14,12 +14,12 @@ namespace C8
 
             if (array.Length == 0) return result;
 
-            var buffer = new HashSet<string>();
+            var buffer = new List<string>();
             CalculateAux(result, buffer, array);
             return result;
         }
 
-        private static void CalculateAux(IList<IList<string>> result, HashSet<string> buffer, string[] array)
+        private static void CalculateAux(IList<IList<string>> result, List<string> buffer, string[] array)
         {
             if (buffer.Count == array.Length)
             {
@@ -56,6 +56,7 @@ namespace C8
 
             for (int i = 0; i < result.Count; i++)
             {
+                Assert.That(result[i].Count, Is.EqualTo(expectedResult[i].Count));
                 for (int j = 0; j < result[i].Count; j++)
                 {
                     Assert.That(result[i][j], Is.EqualTo(expectedResult[i][j]));
