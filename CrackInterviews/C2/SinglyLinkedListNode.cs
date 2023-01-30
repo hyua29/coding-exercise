@@ -19,7 +19,7 @@ namespace C2
 
         public override string ToString()
         {
-            return $"{nameof(Id)}: {Id}; {nameof(Data)}: {Data}; {nameof(Next)}: {Next.Data}";
+            return $"{nameof(Id)}: {Id}; {nameof(Data)}: {Data}; {nameof(Next)}: {Next?.Data}";
         }
     }
 }
