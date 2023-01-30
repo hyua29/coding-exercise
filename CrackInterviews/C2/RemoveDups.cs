@@ -41,7 +41,7 @@ namespace C2
             while (current != null)
             {
                 var runner = current;
-                while (runner != null && runner.Next != null)
+                while (runner.Next != null)
                 {
                     if (runner.Next.Data == current.Data) runner.Next = runner.Next.Next;
                     runner = runner.Next;

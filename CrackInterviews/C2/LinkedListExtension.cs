@@ -13,7 +13,7 @@ namespace C2
             var current = dummyHead;
             for (var i = 0; i < array.Count(); i++)
             {
-                current.Next = new SinglyLinkedListNode(i) {Data = array[i]};
+                current.Next = new SinglyLinkedListNode() {Data = array[i]};
                 current = current.Next;
             }
 

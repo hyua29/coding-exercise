@@ -1,23 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=07a55fde_002De708_002D4572_002D91c6_002Dcb2f3008d1dd/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Calculate_Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.CheckBalancedTests.Calculate_Test&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=40bfb9af_002Dadec_002D4087_002D92bc_002D2d667b5a031b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CalculateByBFS_Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.RouteBetweenNodesTest.CalculateByBFS_Test&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=790bf2c9_002D0945_002D473a_002D8887_002D4a2895dc55aa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GraphHelperTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.GraphHelperTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.CheckBalancedTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.ValidateBSTTests.Calculate_Test&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::AA2CDA11-E6C7-4AA9-B47A-0E0282BE155A::.NETCoreApp,Version=v3.1::C4.ValidateBSTTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=85bb80d1_002D4548_002D428a_002Da1da_002D32a7a777ca4a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Calculate_Test #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Solution /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8da889f1_002Da226_002D4180_002Db12a_002D5496b8756ca9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SumListsTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::2B55CD24-CA6C-42D5-8A12-F9C88A69A98F::.NETCoreApp,Version=v3.1::C2.SumLists.SumListsTest&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

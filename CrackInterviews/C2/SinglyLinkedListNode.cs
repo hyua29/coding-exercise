@@ -1,17 +1,15 @@
 namespace C2
 {
+    using System;
+
     public class SinglyLinkedListNode
     {
         public SinglyLinkedListNode()
         {
+            Id = Guid.NewGuid();
         }
 
-        public SinglyLinkedListNode(int id)
-        {
-            Id = id;
-        }
-
-        public int Id { get; }
+        public Guid Id { get; }
 
         public int Data { get; set; }
 
