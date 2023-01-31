@@ -41,9 +41,9 @@ namespace C2
         [TestCaseSource(nameof(GetTestData))]
         public void SumListsTest(SinglyLinkedListNode head1, SinglyLinkedListNode head2, string expectedResult)
         {
-            var results = Calculate1(head1, head2, 0).ToList();
+            var results = Calculate1(head1, head2, 0).ToList().Select(r => r.Data).Reverse();
 
-            Assert.That(string.Join("", results).Reverse(), Is.EqualTo(expectedResult));
+            Assert.That(string.Join("", results), Is.EqualTo(expectedResult));
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
