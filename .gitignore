@@ -4,3 +4,4 @@
 *bin
 *python-env
 *__pycache__
+*.sln.DotSettings.user
