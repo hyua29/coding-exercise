@@ -1,12 +1,22 @@
 namespace C2
 {
     using System;
+    using System.Diagnostics;
 
     public class SinglyLinkedListNode
     {
         public SinglyLinkedListNode()
         {
             Id = Guid.NewGuid();
+        }
+
+        public SinglyLinkedListNode(SinglyLinkedListNode node, bool copyNext = false)
+        {
+            Debug.Assert(node != null);
+
+            Id = Guid.NewGuid();
+            Data = node.Data;
+            Next = copyNext ? node.Next : null;
         }
 
         public Guid Id { get; }
