@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
-
-namespace C2
+﻿namespace C2
 {
+    using System.Collections.Generic;
+    using NUnit.Framework;
+
     public class Palindrome
     {
         public static bool Calculate1(SinglyLinkedListNode head)
@@ -43,7 +43,7 @@ namespace C2
         }
 
         [TestCaseSource(nameof(GetTestData))]
-        public void SumListsTest(SinglyLinkedListNode head, bool expectedResult)
+        public void PalindromeTest(SinglyLinkedListNode head, bool expectedResult)
         {
             var results = Calculate1(head);
 
