@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace C2
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class LinkedListExtension
     {
         public static SinglyLinkedListNode ToLinkedList(this int[] array)

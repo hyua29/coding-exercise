@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using NUnit.Framework;
-
 namespace C2
 {
+    using System.Collections.Generic;
+    using NUnit.Framework;
+
     [TestFixture]
     internal class ReverseLinkedList
     {
