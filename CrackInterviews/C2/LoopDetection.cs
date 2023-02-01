@@ -8,36 +8,33 @@ namespace C2
     {
         public static SinglyLinkedListNode Calculate1(SinglyLinkedListNode head)
         {
-            if (head == null)
+            if (head?.Next == null)
                 return null;
 
+            var fast = head.Next.Next;
             var slow = head;
-            var fast = head;
 
-            var hasStarted = false;
-
-            while (slow != null && fast != null)
+            while (fast != null && fast != slow)
             {
-                if (hasStarted && slow == fast) break;
-
                 slow = slow.Next;
                 fast = fast.Next?.Next;
-
-                hasStarted = true;
             }
 
             // No loop is detected
             if (fast == null)
-                return null;
-
-            var pointer = head;
-            while (pointer != slow)
             {
-                pointer = pointer.Next;
+                return null;
+            }
+
+            var current = head;
+
+            while (current != slow)
+            {
+                current = current.Next;
                 slow = slow.Next;
             }
 
-            return pointer;
+            return current;
         }
 
         [TestCaseSource(nameof(GetTestData))]
@@ -81,6 +78,7 @@ namespace C2
             yield return new TestCaseData(linkedList4, linkedListLast4);
 
             yield return new TestCaseData(null, null);
+            yield return new TestCaseData(new[] {2}.ToLinkedList(), null);
         }
     }
 }
