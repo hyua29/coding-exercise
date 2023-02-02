@@ -1,7 +1,7 @@
-using NUnit.Framework;
-
 namespace C3
 {
+    using NUnit.Framework;
+
     public class StackImpl<T>
     {
         private T[] data;
