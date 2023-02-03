@@ -1,10 +1,8 @@
-using System;
-using System.Linq;
-using NUnit.Framework;
-
 namespace C3
 {
+    using System;
     using System.Collections.Generic;
+    using NUnit.Framework;
 
     public class SortStack
     {
