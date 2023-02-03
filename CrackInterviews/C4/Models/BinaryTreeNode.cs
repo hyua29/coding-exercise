@@ -1,4 +1,4 @@
-namespace C4
+namespace C4.Models
 {
     public class BinaryTreeNode<T>
     {

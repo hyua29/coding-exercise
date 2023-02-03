@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using NUnit.Framework;
-
 namespace C4
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using C4.Models;
+    using NUnit.Framework;
+
     public class RouteBetweenNodes
     {
         public static bool CalculateByDFS<T>(GraphNode<T> currentNode, GraphNode<T> nodeToFind)

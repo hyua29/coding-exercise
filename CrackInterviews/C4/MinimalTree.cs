@@ -1,3 +1,5 @@
+using C4.Models;
+
 namespace C4
 {
     public class MinimalTree

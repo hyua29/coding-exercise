@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
-
-namespace C4
+﻿namespace C4
 {
+    using System;
+    using System.Collections.Generic;
+    using C4.Models;
+    using NUnit.Framework;
+
     public class CheckBalanced
     {
         public static bool Calculate(BinaryTreeNode<int> root)

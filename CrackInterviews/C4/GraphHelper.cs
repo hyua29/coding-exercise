@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using C4.Models;
 using NUnit.Framework;
 
 namespace C4

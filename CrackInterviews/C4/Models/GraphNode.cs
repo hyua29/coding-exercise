@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
-namespace C4
+namespace C4.Models
 {
+    using System.Collections.Generic;
+
     public class GraphNode<T>
     {
         public bool HasVisited;
