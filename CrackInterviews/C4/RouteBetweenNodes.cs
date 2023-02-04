@@ -19,7 +19,6 @@ namespace C4
             foreach (var n in currentNode.AdjcentNodes)
                 if (!n.HasVisited)
                 {
-                    currentNode.HasVisited = true;
                     if (CalculateByDFS(n, nodeToFind))
                     {
                         nodeFound = true;
