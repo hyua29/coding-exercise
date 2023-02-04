@@ -1,7 +1,8 @@
-﻿using System;
+﻿using DataStructures.Models;
 
 namespace C2
 {
+    using System;
     using System.Collections.Generic;
     using NUnit.Framework;
 

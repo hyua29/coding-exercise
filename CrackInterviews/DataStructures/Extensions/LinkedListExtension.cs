@@ -1,7 +1,6 @@
-namespace C2
+namespace DataStructures.Extensions
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using DataStructures.Models;
 
     public static class LinkedListExtension
     {

@@ -1,4 +1,4 @@
-namespace C4.Models
+namespace DataStructures.Models
 {
     public class BinaryTreeNode<T>
     {
@@ -9,8 +9,8 @@ namespace C4.Models
 
         public T Data { get; set; }
 
-        public BinaryTreeNode<T> LeftNode { get; set; }
+        public BinaryTreeNode<T>? LeftNode { get; set; }
 
-        public BinaryTreeNode<T> RightNode { get; set; }
+        public BinaryTreeNode<T>? RightNode { get; set; }
     }
 }

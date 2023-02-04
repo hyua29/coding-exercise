@@ -1,7 +1,5 @@
-namespace C4.Models
+namespace DataStructures.Models
 {
-    using System.Collections.Generic;
-
     public class GraphNode<T>
     {
         public bool HasVisited;

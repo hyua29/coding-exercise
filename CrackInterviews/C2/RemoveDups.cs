@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using DataStructures.Extensions;
+using DataStructures.Models;
 using NUnit.Framework;
 
 namespace C2

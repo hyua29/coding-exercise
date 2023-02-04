@@ -1,9 +1,9 @@
+using DataStructures.Models;
+
 namespace C4
 {
     using System.Collections.Generic;
     using NUnit.Framework;
-    
-    using Models;
 
     public class MinimalTree
     {

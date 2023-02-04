@@ -1,4 +1,7 @@
-﻿namespace C2
+﻿using DataStructures.Extensions;
+using DataStructures.Models;
+
+namespace C2
 {
     using System.Collections.Generic;
     using NUnit.Framework;

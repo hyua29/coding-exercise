@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using C4.Models;
+using DataStructures.Models;
 using NUnit.Framework;
 
 namespace C4

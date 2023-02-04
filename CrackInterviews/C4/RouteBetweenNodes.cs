@@ -1,9 +1,10 @@
+using DataStructures.Models;
+
 namespace C4
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using C4.Models;
     using NUnit.Framework;
 
     public class RouteBetweenNodes

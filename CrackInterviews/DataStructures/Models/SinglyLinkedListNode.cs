@@ -1,6 +1,5 @@
-namespace C2
+namespace DataStructures.Models
 {
-    using System;
     using System.Diagnostics;
 
     public class SinglyLinkedListNode
@@ -23,7 +22,7 @@ namespace C2
 
         public int Data { get; set; }
 
-        public SinglyLinkedListNode Next { get; set; }
+        public SinglyLinkedListNode? Next { get; set; }
 
         public override string ToString()
         {
