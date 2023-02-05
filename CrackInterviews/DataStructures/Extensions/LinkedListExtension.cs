@@ -1,18 +1,16 @@
 namespace DataStructures.Extensions
 {
-    using DataStructures.Models;
+    using Models;
 
     public static class LinkedListExtension
     {
-        public static SinglyLinkedListNode ToLinkedList(this int[] array)
+        public static SinglyLinkedListNode? ToLinkedList(this int[] array)
         {
-            if (array == null) return null;
-
             var dummyHead = new SinglyLinkedListNode();
             var current = dummyHead;
             for (var i = 0; i < array.Count(); i++)
             {
-                current.Next = new SinglyLinkedListNode() {Data = array[i]};
+                current.Next = new SinglyLinkedListNode {Data = array[i]};
                 current = current.Next;
             }
 
@@ -22,10 +20,11 @@ namespace DataStructures.Extensions
         public static List<SinglyLinkedListNode> ToList(this SinglyLinkedListNode singlyLinkedListNode)
         {
             var list = new List<SinglyLinkedListNode>();
-            while (singlyLinkedListNode != null)
+            var current = singlyLinkedListNode;
+            while (current != null)
             {
-                list.Add(singlyLinkedListNode);
-                singlyLinkedListNode = singlyLinkedListNode.Next;
+                list.Add(current);
+                current = current.Next;
             }
 
             return list;
@@ -33,8 +32,6 @@ namespace DataStructures.Extensions
 
         public static SinglyLinkedListNode GetLastNode(this SinglyLinkedListNode node)
         {
-            if (node == null) return null;
-
             var current = node;
             while (current.Next != null) current = current.Next;
 
