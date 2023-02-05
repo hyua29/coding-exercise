@@ -103,7 +103,6 @@ namespace C4
 
             var expectedResults = new List<List<int>> {new List<int> {1}, new List<int> {3, 2}, new List<int> {5, 4}};
 
-
             yield return new TestCaseData(root, expectedResults);
 
             var root2 = new BinaryTreeNode<int>(1)

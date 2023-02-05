@@ -1,10 +1,9 @@
-﻿using DataStructures.Models;
-
-namespace C4
+﻿namespace C4
 {
     using System;
     using System.Collections.Generic;
     using NUnit.Framework;
+    using DataStructures.Models;
 
     public class CheckBalanced
     {
@@ -16,7 +15,7 @@ namespace C4
             return isBalanced;
         }
 
-        public static int GetHeight(BinaryTreeNode<int> node, ref bool isBalanced)
+        private static int GetHeight(BinaryTreeNode<int> node, ref bool isBalanced)
         {
             if (node == null) return 0;
 
