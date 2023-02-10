@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using DataStructures.Models;
-using NUnit.Framework;
-
 namespace C4
 {
+    using System;
+    using System.Collections.Generic;
+    using DataStructures.Models;
+    using NUnit.Framework;
+
     public class Graph<T>
     {
         private readonly Random _random;
 
         public Graph(IList<GraphNode<T>> nodes)
         {
-            if (nodes == null) throw new ArgumentNullException(nameof(Nodes), "Nodes list cannot be null");
-            Nodes = nodes;
+            Nodes = nodes ?? throw new ArgumentNullException(nameof(Nodes), "Nodes list cannot be null");
             _random = new Random();
         }
 

@@ -8,9 +8,9 @@ namespace DataStructures.Extensions
         {
             var dummyHead = new SinglyLinkedListNode();
             var current = dummyHead;
-            for (var i = 0; i < array.Count(); i++)
+            foreach (var t in array)
             {
-                current.Next = new SinglyLinkedListNode {Data = array[i]};
+                current.Next = new SinglyLinkedListNode {Data = t};
                 current = current.Next;
             }
 

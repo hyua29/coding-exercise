@@ -1,55 +1,108 @@
-using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
+using System.Collections.ObjectModel;
 
 namespace C4
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using NUnit.Framework;
+
     public class BuildOrder
     {
-        public static IList<string> Calculate(string[] projects, IList<BuildDependency> dependencies)
+        public static IList<string> CalculateWithDfs(string[] projects, IList<BuildDependency> dependencies)
         {
-            if (projects == null) return new List<string>();
+            if (projects == null) return null;
 
-            var graph = new BuildGraph();
+            var graph = new BuildOrderGraph<ProjectForDfs>();
 
-            foreach (var p in projects) graph.AddProject(p);
+            foreach (var p in projects) graph.AddProject(p, new ProjectForDfs(p));
 
             foreach (var d in dependencies) graph.AddEdge(d.ParentProjectName, d.DependentProjectName);
 
             var result = new Stack<string>();
 
-            var hasCycle = false;
             foreach (var pair in graph.ProjectMap)
                 if (pair.Value.Status != Status.Visited)
                 {
-                    hasCycle = hasCycle || DoDFS(pair.Value, result);
-                    if (hasCycle) return new List<string>();
+                    var hasCycle = DoDfs(pair.Value, result);
+                    if (hasCycle) return null;
                 }
 
             return result.ToList();
         }
 
-        private static bool DoDFS(Project project, Stack<string> result)
+        public static IList<string> CalculateWithLayer(string[] projects, IList<BuildDependency> dependencies)
         {
-            // Circle detected
-            if (project.Status == Status.Visiting) return true;
+            if (projects == null) return null;
 
-            // Project has been explored
-            if (project.Status == Status.Visited) return false;
+            var graph = new BuildOrderGraph<ProjectForLayer>();
 
-            // Start to process current project
-            project.Status = Status.Visiting;
+            foreach (var p in projects) graph.AddProject(p, new ProjectForLayer(p));
 
-            var children = project.ChildrenProjectMap.Select(x => x.Value).ToList();
-            var hasCycle = false;
-            foreach (var p in children)
+            foreach (var d in dependencies) graph.AddEdge(d.ParentProjectName, d.DependentProjectName);
+
+            var results = new List<string>();
+
+            IList<ProjectForLayer> toBeProcessed = null;
+            do
             {
-                hasCycle = hasCycle || DoDFS(p, result);
-                if (hasCycle) return true;
+                toBeProcessed = GetToBeProcessed(graph);
+                foreach (var p in toBeProcessed)
+                {
+                    results.Add(p.ProjectName);
+
+                    foreach (var child in p.ChildProjects)
+                    {
+                        child.DecrementParentCount();
+                    }
+                }
+            } while (toBeProcessed.Count > 0);
+
+            if (results.Count != projects.Length)
+            {
+                // A loop is detected
+                return null;
             }
 
-            result.Push(project.ProjectName);
-            project.Status = Status.Visited;
+            return results;
+        }
+
+        private static IList<ProjectForLayer> GetToBeProcessed(BuildOrderGraph<ProjectForLayer> graph)
+        {
+            var toBeProcessed = new List<ProjectForLayer>();
+            foreach (var project in graph.ProjectMap.Values)
+            {
+                if (project.ParentCount == 0)
+                {
+                    toBeProcessed.Add(project);
+                }
+            }
+
+            foreach (var project in toBeProcessed)
+            {
+                graph.ProjectMap.Remove(project.ProjectName);
+            }
+
+            return toBeProcessed;
+        }
+
+        private static bool DoDfs(ProjectForDfs projectForDfs, Stack<string> result)
+        {
+            // Circle detected
+            if (projectForDfs.Status == Status.Visiting) return true;
+
+            // Project has been explored
+            if (projectForDfs.Status == Status.Visited) return false;
+
+            // Start to process current project
+            projectForDfs.Status = Status.Visiting;
+
+            foreach (var p in projectForDfs.ChildProjects)
+            {
+                if (DoDfs(p, result)) return true;
+            }
+
+            result.Push(projectForDfs.ProjectName);
+            projectForDfs.Status = Status.Visited;
 
             return false;
         }
@@ -64,19 +117,63 @@ namespace C4
         Visited
     }
 
-    public class Project
+    public abstract class Project<T> where T : Project<T>
     {
-        public Project(string projectName)
+        private readonly IDictionary<string, T> _childrenProjectMap = new Dictionary<string, T>();
+
+        protected Project(string projectName)
         {
             ProjectName = projectName;
+        }
+
+        public ICollection<T> ChildProjects => _childrenProjectMap.Values;
+
+        public virtual void AddChild(T child)
+        {
+            _childrenProjectMap.Add(child.ProjectName, child);
+        }
+
+        public string ProjectName { get; }
+    }
+
+    public class ProjectForDfs : Project<ProjectForDfs>
+    {
+        public ProjectForDfs(string projectName) : base(projectName)
+        {
             Status = Status.New;
         }
 
-        public IDictionary<string, Project> ChildrenProjectMap { get; } = new Dictionary<string, Project>();
-
-        public string ProjectName { get; }
-
         public Status Status { get; set; }
+    }
+
+    public class ProjectForLayer : Project<ProjectForLayer>
+    {
+        public ProjectForLayer(string projectName) : base(projectName)
+        {
+            ParentCount = 0;
+        }
+
+        public override void AddChild(ProjectForLayer child)
+        {
+            base.AddChild(child);
+
+            child.IncrementParentCount();
+        }
+
+        public int ParentCount { get; private set; }
+
+        private void IncrementParentCount()
+        {
+            ParentCount++;
+        }
+
+        public void DecrementParentCount()
+        {
+            if (ParentCount > 0)
+            {
+                ParentCount--;
+            }
+        }
     }
 
     public class BuildDependency
@@ -92,21 +189,21 @@ namespace C4
         public string DependentProjectName { get; }
     }
 
-    public class BuildGraph
+    public class BuildOrderGraph<T> where T : Project<T>
     {
-        public IDictionary<string, Project> ProjectMap { get; } = new Dictionary<string, Project>();
+        public IDictionary<string, T> ProjectMap { get; } = new Dictionary<string, T>();
 
-        public void AddProject(string project)
+        public void AddProject(string key, T project)
         {
-            var newProject = new Project(project);
-            ProjectMap.Add(newProject.ProjectName, newProject);
+            ProjectMap.Add(key, project);
         }
 
         public void AddEdge(string parentProjectName, string dependentProjectName)
         {
             var parentProject = ProjectMap[parentProjectName];
             var dependentProject = ProjectMap[dependentProjectName];
-            parentProject.ChildrenProjectMap.Add(dependentProject.ProjectName, dependentProject);
+
+            parentProject.AddChild(dependentProject);
         }
     }
 
@@ -114,14 +211,29 @@ namespace C4
     public class BuildOrderTests
     {
         [TestCaseSource(nameof(GetTestData))]
-        public void Calculate_Test(string[] project, IList<BuildDependency> dependencies, bool hasCycle)
+        public void CalculateLayer_Test(string[] project, IList<BuildDependency> dependencies, bool hasCycle)
         {
-            var result = BuildOrder.Calculate(project, dependencies);
+            var result = BuildOrder.CalculateWithLayer(project, dependencies);
             if (project == null || hasCycle)
             {
-                Assert.IsEmpty(result);
+                Assert.IsNull(result);
                 return;
             }
+
+            Assert.That(result.Count, Is.EqualTo(project.Length));
+        }
+
+        [TestCaseSource(nameof(GetTestData))]
+        public void Calculate_Test(string[] project, IList<BuildDependency> dependencies, bool hasCycle)
+        {
+            var result = BuildOrder.CalculateWithDfs(project, dependencies);
+            if (project == null || hasCycle)
+            {
+                Assert.IsNull(result);
+                return;
+            }
+
+            Assert.That(result.Count, Is.EqualTo(project.Length));
 
             foreach (var d in dependencies)
             {
