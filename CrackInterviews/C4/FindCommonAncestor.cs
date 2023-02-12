@@ -19,7 +19,7 @@ public class FindCommonAncestor
             return root;
         }
 
-        if (!NodePresent(root, p) || !NodePresent(root, q))
+        if (!IsNodeInTree(root, p) || !IsNodeInTree(root, q))
         {
             return null;
         }
@@ -37,8 +37,8 @@ public class FindCommonAncestor
             return root;
         }
 
-        var pOnLeft = NodePresent(root.LeftNode, p);
-        var qOnLeft = NodePresent(root.LeftNode, q);
+        var pOnLeft = IsNodeInTree(root.LeftNode, p);
+        var qOnLeft = IsNodeInTree(root.LeftNode, q);
 
         if (pOnLeft != qOnLeft)
         {
@@ -50,7 +50,7 @@ public class FindCommonAncestor
         return CommonAncestorHelper(nextRoot, p, q);
     }
 
-    private static bool NodePresent(BinaryTreeNode<int> root, BinaryTreeNode<int> nodeToSearch)
+    private static bool IsNodeInTree(BinaryTreeNode<int> root, BinaryTreeNode<int> nodeToSearch)
     {
         if (root == null || nodeToSearch == null)
         {
@@ -62,7 +62,7 @@ public class FindCommonAncestor
             return true;
         }
 
-        return NodePresent(root.LeftNode, nodeToSearch) || NodePresent(root.RightNode, nodeToSearch);
+        return IsNodeInTree(root.LeftNode, nodeToSearch) || IsNodeInTree(root.RightNode, nodeToSearch);
     }
 
     [TestFixture]
