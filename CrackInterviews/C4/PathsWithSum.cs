@@ -1,15 +1,56 @@
-using System.Collections.Generic;
-using DataStructures.Models;
-using NUnit.Framework;
-
 namespace C4
 {
+    using System.Collections.Generic;
+    using DataStructures.Models;
+    using NUnit.Framework;
+
     public class PathsWithSum
     {
-        public static int Calculate(BinaryTreeNode<int> root, int sum)
+        public static int CalculateWithCache(BinaryTreeNode<int> root, int targetSum)
         {
             if (root == null) return 0;
 
+
+            return CalculateWithCacheImpl(root, 0, targetSum, new Dictionary<int, int>());;
+        }
+
+        private static int CalculateWithCacheImpl(BinaryTreeNode<int> node, int currentSum, int targetSum,
+            IDictionary<int, int> cache)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+
+            var updatedSum = currentSum + node.Data;
+            var delta = updatedSum - targetSum;
+
+            var pathCount = 0;
+            if (cache.TryGetValue(delta, out var count) && count > 0)
+            {
+                pathCount += count;
+            }
+
+            if (cache.ContainsKey(updatedSum))
+            {
+                cache[updatedSum]++;
+            }
+            else
+            {
+                cache.Add(updatedSum, 1);
+            }
+
+            pathCount += CalculateWithCacheImpl(node.LeftNode, updatedSum, targetSum, cache);
+            pathCount += CalculateWithCacheImpl(node.RightNode, updatedSum, targetSum, cache);
+
+            cache[updatedSum]--;
+
+            return pathCount;
+        }
+
+        public static int BruteForceCalculate(BinaryTreeNode<int> root, int sum)
+        {
+            if (root == null) return 0;
 
             return GetPaths(root, sum);
         }
@@ -46,9 +87,15 @@ namespace C4
     public class PathsWithSumTests
     {
         [TestCaseSource(nameof(GetTestData))]
-        public void Calculate_Test(BinaryTreeNode<int> root, int sum, int expectedResult)
+        public void BruteForceCalculate_Test(BinaryTreeNode<int> root, int sum, int expectedResult)
         {
-            Assert.That(PathsWithSum.Calculate(root, sum), Is.EqualTo(expectedResult));
+            Assert.That(PathsWithSum.BruteForceCalculate(root, sum), Is.EqualTo(expectedResult));
+        }
+        
+        [TestCaseSource(nameof(GetTestData))]
+        public void CalculateWithCache_Test(BinaryTreeNode<int> root, int sum, int expectedResult)
+        {
+            Assert.That(PathsWithSum.BruteForceCalculate(root, sum), Is.EqualTo(expectedResult));
         }
 
         private static IEnumerable<TestCaseData> GetTestData()
@@ -65,6 +112,16 @@ namespace C4
                     },
                     RightNode = new BinaryTreeNode<int>(2)
                     {
+                        LeftNode = new BinaryTreeNode<int>(-4)
+                        {
+                            RightNode = new BinaryTreeNode<int>(5)
+                            {
+                                LeftNode = new BinaryTreeNode<int>(6)
+                                {
+                                    RightNode = new BinaryTreeNode<int>(-6)
+                                },
+                            }
+                        },
                         RightNode = new BinaryTreeNode<int>(1)
                     }
                 },
@@ -72,7 +129,7 @@ namespace C4
                 {
                     RightNode = new BinaryTreeNode<int>(11)
                 }
-            }, 8, 3);
+            }, 8, 5);
         }
     }
 }
