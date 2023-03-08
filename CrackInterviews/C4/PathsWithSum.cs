@@ -1,3 +1,5 @@
+using System;
+
 namespace C4
 {
     using System.Collections.Generic;
@@ -98,6 +100,16 @@ namespace C4
             Assert.That(PathsWithSum.BruteForceCalculate(root, sum), Is.EqualTo(expectedResult));
         }
 
+        [Test]
+        public void Bit_Test()
+        {
+            var one = 4;
+            var shifted = one >> 4;
+
+            
+            Console.WriteLine(Convert.ToString(int.MaxValue, 2));
+            Console.WriteLine(Convert.ToString(shifted, 2));
+        }
         private static IEnumerable<TestCaseData> GetTestData()
         {
             yield return new TestCaseData(null, 8, 0);
