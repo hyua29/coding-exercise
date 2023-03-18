@@ -4,6 +4,9 @@ using NUnit.Framework;
 
 namespace C8
 {
+    /// <summary>
+    /// Checkout this link for a general solution - https://leetcode.com/problems/permutations/solutions/18239/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partioning/
+    /// </summary>
     public class PermutationsWithoutDupes
     {
         public static IList<IList<string>> Calculate(string[] array)

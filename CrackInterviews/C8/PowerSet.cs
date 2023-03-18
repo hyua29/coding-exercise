@@ -36,9 +36,6 @@ namespace C8
             Debug.Assert(set != null);
 
             var result = new List<IList<char>>();
-            // {
-            //     new List<char>()
-            // };
 
             var temp = new List<char>();
 
@@ -49,12 +46,12 @@ namespace C8
 
         private static void CalculateAux(IList<IList<char>> result, IList<char> temp, char[] set, int index)
         {
-            result.Add(temp.Select(x => x).ToList());
+            result.Add(temp.ToList());
             for (int i = index; i < set.Length; i++)
             {
                 temp.Add(set[i]);
                 PowerSet.CalculateAux(result, temp, set, i + 1);
-                temp.Remove(set[i]);
+                temp.RemoveAt(temp.Count - 1);
             }
         }
     }

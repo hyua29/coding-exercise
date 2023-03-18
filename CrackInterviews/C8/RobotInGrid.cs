@@ -1,8 +1,8 @@
+namespace C8;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-namespace C8;
 
 // TODO: Fix me
 public class RobotInGrid
