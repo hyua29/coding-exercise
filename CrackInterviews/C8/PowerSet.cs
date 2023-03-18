@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using NUnit.Framework;
-
 namespace C8
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using NUnit.Framework;
+
     public class PowerSet
     {
         public static IList<IList<char>> CalculateWithDp(char[] set)
