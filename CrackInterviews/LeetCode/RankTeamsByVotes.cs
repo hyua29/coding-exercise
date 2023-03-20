@@ -1,6 +1,6 @@
-namespace LeetCode;
-
 using System.Diagnostics;
+
+namespace LeetCode;
 
 public class RankTeamsByVotes
 {
@@ -16,38 +16,66 @@ public class RankTeamsByVotes
         var numOfTeams = votes[0].Length;
 
         var teamOrder = new char[numOfTeams];
-        var teamsArranged = new HashSet<char>();
+        var teamNotArranged = new HashSet<char>(votes[0].Select(x => x));
 
         for (int i = 0; i < teamOrder.Length; i++)
         {
-            var chosenTeam =  DetermineTeamOrder(i, votes, teamsArranged);
+            var chosenTeam =  DetermineTeamOrder(votes, new HashSet<char>(teamNotArranged));
 
             teamOrder[i] = chosenTeam;
-            teamsArranged.Add(chosenTeam);
+            teamNotArranged.Remove(chosenTeam);
         }
 
         return string.Join("", teamOrder);
     }
 
-    private static char DetermineTeamOrder(int position, string[] votes, HashSet<char> teamsArranged)
+    private static char DetermineTeamOrder(string[] votes, HashSet<char> candidates)
     {
-        var buffer = new int[26];
+        Debug.Assert(votes?.Length > 0);
+        Debug.Assert(candidates != null);
 
-        foreach (var v in votes)
+        for (int i = 0; i < votes[0].Length; i++)
         {
-            buffer[v[position] - 'A']++;
+             var buffer = new int[26];
+             
+             foreach (var v in votes)
+             {
+                 if (candidates.Contains(v[i]))
+                 {
+                     buffer[v[i] - 'A']++;
+                 }
+             }
+
+             var newCandidates = NarrowCandidates(buffer);
+
+             if (newCandidates != null)
+             {
+                 candidates = newCandidates;
+             }
+
+             if (candidates.Count == 1)
+             {
+                 return candidates.First();
+             }
         }
 
-        var candidates = FindCandidates(buffer);
-
-        return candidates.Count == 1 ? candidates.First() : OrderTiedTeam(position + 1, candidates, votes);
+        // Teams are still tied after considering all positions, we rank them alphabetically based on their team letter.
+        return candidates.OrderBy(c => c).First();
     }
 
-    private static HashSet<char> FindCandidates(int[] buffer)
+    private static HashSet<char>? NarrowCandidates(int[] buffer)
     {
+        Debug.Assert(buffer != null);
         Debug.Assert(buffer.Length == 26);
 
         var maxCount = buffer.Max();
+
+        // Nothing is in the buffer, we can't narrow down the candidates
+        if (maxCount == 0)
+        {
+            return null;
+        }
+
         var candidates = new HashSet<char>();
 
         for (int i = 0; i < buffer.Length; i++)
@@ -63,28 +91,22 @@ public class RankTeamsByVotes
         return candidates;
     }
 
-    private static char OrderTiedTeam(int position, HashSet<char> candidates, string[] votes)
+    [TestFixture]
+    public class RankTeamsTests
     {
-        // Teams are still tied after considering all positions, we rank them alphabetically based on their team letter.
-        if (position == votes[0].Length)
+        [TestCaseSource(nameof(GetTestCaseData))]
+        public void RankTeamsTest(string[] inputs, string expected)
         {
-            return candidates.OrderBy(c => c).First();
+            var result = new RankTeamsByVotes().RankTeams(inputs);
+            
+            Assert.That(result, Is.EqualTo(expected));
         }
 
-        var buffer = new int[26];
-
-        foreach (var v in votes)
+        public static IEnumerable<TestCaseData> GetTestCaseData()
         {
-            if (candidates.Contains(v[position]))
-            {
-                buffer[v[position] - 'A']++;
-            }
+            yield return new TestCaseData(new [] {"ABC","ACB","ABC","ACB","ACB"}, "ACB");
+            yield return new TestCaseData(new [] {"WXYZ","XYZW"}, "XWYZ");
+            yield return new TestCaseData(new [] {"ZMNAGUEDSJYLBOPHRQICWFXTVK"}, "ZMNAGUEDSJYLBOPHRQICWFXTVK");
         }
-
-        var newCandidates = FindCandidates(buffer);
-
-        return newCandidates.Count == 1
-            ? newCandidates.First()
-            : OrderTiedTeam(position + 1, newCandidates, votes);
     }
 }
