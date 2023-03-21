@@ -57,7 +57,7 @@ namespace C8
         }
     }
 
-    public class PermutationsWithoutDuTests
+    public class PermutationsWithDupesTests
     {
         [TestCaseSource(nameof(GetTestData))]
         public void CalculateTests(string[] array, IList<IList<string>> expectedResult)

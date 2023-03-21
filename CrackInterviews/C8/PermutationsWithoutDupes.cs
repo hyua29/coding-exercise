@@ -1,42 +1,42 @@
-using System.Collections.Generic;
-using System;
-using NUnit.Framework;
-
 namespace C8
 {
+    using System.Collections.Generic;
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using NUnit.Framework;
+
     /// <summary>
     /// Checkout this link for a general solution - https://leetcode.com/problems/permutations/solutions/18239/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partioning/
     /// </summary>
     public class PermutationsWithoutDupes
     {
-        public static IList<IList<string>> Calculate(string[] array)
+        public static IList<IList<char>> Calculate(char[] array)
         {
-            if (array == null) return null;
+            Debug.Assert(array != null);
 
-            var result = new List<IList<string>>();
+            if (array.Length == 0) return new List<IList<char>>();
 
-            if (array.Length == 0) return result;
+            var results = new List<IList<char>>();
 
-            var buffer = new List<string>();
-            CalculateAux(result, buffer, array);
-            return result;
+            Aux(array, results, new HashSet<char>());
+            return results;
         }
 
-        private static void CalculateAux(IList<IList<string>> result, List<string> buffer, string[] array)
+        private static void Aux(char[] array, IList<IList<char>> results, HashSet<char> buffer)
         {
             if (buffer.Count == array.Length)
             {
-                result.Add(new List<string>(buffer));
-                return;
+                results.Add(buffer.ToList());
             }
 
-            for (int i = 0; i < array.Length; i++)
+            foreach (var c in array)
             {
-                if (!buffer.Contains(array[i]))
+                if (!buffer.Contains(c))
                 {
-                    buffer.Add(array[i]);
-                    CalculateAux(result, buffer, array);
-                    buffer.Remove(array[i]);
+                    buffer.Add(c);
+                    Aux(array, results, buffer);
+                    buffer.Remove(c);
                 }
             }
         }
@@ -45,14 +45,8 @@ namespace C8
     public class PermutationsWithoutDupesTests
     {
         [TestCaseSource(nameof(GetTestData))]
-        public void CalculateTests(string[] array, IList<IList<string>> expectedResult)
+        public void CalculateTests(char[] array, IList<IList<char>> expectedResult)
         {
-            if (array == null)
-            {
-                Assert.That(PermutationsWithoutDupes.Calculate(array), Is.EqualTo(expectedResult));
-                return;
-            };
-
             var result = PermutationsWithoutDupes.Calculate(array);
 
             Assert.That(result.Count, Is.EqualTo(expectedResult.Count));
@@ -69,18 +63,18 @@ namespace C8
 
         private static IEnumerable<TestCaseData> GetTestData()
         {
-            yield return new TestCaseData(null, null);
-            yield return new TestCaseData(new string[0], new List<IList<string>>());
-            yield return new TestCaseData(new string[] { "1" }, new List<IList<string>>() { new List<string> { "1" } });
-            yield return new TestCaseData(new string[] { "1", "2" }, new List<IList<string>>() { new List<string> { "1", "2" }, new List<string> { "2", "1" } });
-            yield return new TestCaseData(new string[] { "1", "2", "3" }, new List<IList<string>>()
+            yield return new TestCaseData(Array.Empty<char>(), new List<IList<char>>());
+            yield return new TestCaseData(new char[] {'1'}, new List<IList<char>>() {new List<char> {'1'}});
+            yield return new TestCaseData(new char[] {'1', '2'},
+                new List<IList<char>>() {new List<char> {'1', '2'}, new List<char> {'2', '1'}});
+            yield return new TestCaseData(new char[] {'1', '2', '3'}, new List<IList<char>>()
             {
-                new List<string> { "1", "2", "3" },
-                new List<string> { "1", "3", "2" },
-                new List<string> { "2", "1", "3" },
-                new List<string> { "2", "3", "1" },
-                new List<string> { "3", "1", "2" },
-                new List<string> { "3", "2", "1" },
+                new List<char> {'1', '2', '3'},
+                new List<char> {'1', '3', '2'},
+                new List<char> {'2', '1', '3'},
+                new List<char> {'2', '3', '1'},
+                new List<char> {'3', '1', '2'},
+                new List<char> {'3', '2', '1'},
             });
         }
     }
