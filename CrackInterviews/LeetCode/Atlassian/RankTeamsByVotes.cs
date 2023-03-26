@@ -1,6 +1,6 @@
-using System.Diagnostics;
+namespace LeetCode.Atlassian;
 
-namespace LeetCode;
+using System.Diagnostics;
 
 public class RankTeamsByVotes
 {

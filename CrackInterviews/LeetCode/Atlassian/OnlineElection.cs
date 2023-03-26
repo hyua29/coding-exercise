@@ -1,4 +1,4 @@
-namespace LeetCode;
+namespace LeetCode.Atlassian;
 
 using System.Diagnostics;
 
