@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-
-using NUnit.Framework;
-
 namespace C8
 {
+    using System.Collections.Generic;
+    using NUnit.Framework;
+
     public class Parens
     {
         public static IList<string> Calculate(int numOfParentheses)
@@ -17,10 +16,12 @@ namespace C8
             return result;
         }
 
-        private static void CalculateAux(IList<string> result, char[] tempResult, int numOfLeft, int numOfRight, int index)
+        private static void CalculateAux(IList<string> result, char[] tempResult, int numOfLeft, int numOfRight,
+            int index)
         {
             if (numOfLeft < 0 || numOfLeft > numOfRight) return;
-            if (numOfLeft == 0 && numOfRight == 0) {
+            if (numOfLeft == 0 && numOfRight == 0)
+            {
                 result.Add(new string(tempResult));
                 return;
             }
@@ -35,7 +36,6 @@ namespace C8
     [TestFixture]
     public class ParensTests
     {
-
         [TestCaseSource(nameof(GetTestData))]
         public void Calculate(int numOfParentheses, IList<string> expectedResult)
         {
@@ -59,9 +59,9 @@ namespace C8
         {
             yield return new TestCaseData(null, null);
             yield return new TestCaseData(0, new List<string>());
-            yield return new TestCaseData(1, new List<string>() { "()" });
-            yield return new TestCaseData(2, new List<string>() { "(())", "()()" });
-            yield return new TestCaseData(3, new List<string>() { "((()))", "(()())", "(())()", "()(())", "()()()" });
+            yield return new TestCaseData(1, new List<string>() {"()"});
+            yield return new TestCaseData(2, new List<string>() {"(())", "()()"});
+            yield return new TestCaseData(3, new List<string>() {"((()))", "(()())", "(())()", "()(())", "()()()"});
         }
     }
 }
