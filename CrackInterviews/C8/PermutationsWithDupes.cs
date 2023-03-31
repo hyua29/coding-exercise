@@ -17,7 +17,7 @@ namespace C8
 
             var tempResult = new List<string>();
             var dict = BuildDictionary(array);
-            CalculateAux(dict, array, array.Length, result, tempResult);
+            CalculateAux(dict, array.Length, result, tempResult);
             return result;
         }
 
@@ -33,7 +33,7 @@ namespace C8
             return dict;
         }
 
-        private static void CalculateAux(Dictionary<string, int> dict, string[] array, int remaining, IList<IList<string>> result, IList<string> tempResult)
+        private static void CalculateAux(Dictionary<string, int> dict, int remaining, IList<IList<string>> result, IList<string> tempResult)
         {
             if (remaining == 0)
             {
@@ -49,7 +49,7 @@ namespace C8
                 {
                     dict[key] = count - 1;
                     tempResult.Add(key);
-                    CalculateAux(dict, array, remaining - 1, result, tempResult);
+                    CalculateAux(dict, remaining - 1, result, tempResult);
                     tempResult.RemoveAt(tempResult.Count - 1);
                     dict[key] = count;
                 }

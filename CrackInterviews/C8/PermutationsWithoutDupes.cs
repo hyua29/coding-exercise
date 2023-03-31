@@ -19,11 +19,11 @@ namespace C8
 
             var results = new List<IList<char>>();
 
-            Aux(array, results, new HashSet<char>());
+            Aux(array, results, new List<char>());
             return results;
         }
 
-        private static void Aux(char[] array, IList<IList<char>> results, HashSet<char> buffer)
+        private static void Aux(char[] array, IList<IList<char>> results, IList<char> buffer)
         {
             if (buffer.Count == array.Length)
             {
