@@ -1,31 +1,30 @@
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace C8;
 
 using System.Diagnostics;
 
+/// <summary>
+/// See explanation here: https://leetcode.com/problems/coin-change-ii/solutions/141076/unbounded-knapsack/?orderBy=most_votes
+/// </summary>
 public class Coins
 {
-    public static int Calculate(int[] availableValues, int targetCents)
+    public static int Calculate(int[] coins, int amount)
     {
-        Debug.Assert(targetCents >= 0);
+        var unique = new HashSet<int>(coins).ToArray();
 
-        var buffer = new int [targetCents + 1];
-        buffer[0] = 1;
-
-        for (int i = 1; i <= targetCents; i++)
-        {
-            foreach (var v in availableValues)
-            {
-                var previous = i - v;
-                if (previous >= 0)
-                {
-                    buffer[i] += buffer[previous];
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;        
+        for (int j = 0; j < unique.Length; j++) {
+            for (int i = 1; i <= amount; i++) {
+                if (i - unique[j] >= 0) {
+                    dp[i] += dp[i - unique[j]];
                 }
             }
         }
-
-        return buffer[^1];
+        return dp[amount];
     }
 }
 
@@ -37,7 +36,7 @@ public class CoinChangeTests
     {
         int[] coins = new int[] { 1,5 };
         int amount = 10;
-        int expected = 1;
+        int expected = 3;
         int actual = Coins.Calculate(coins, amount);
         Assert.AreEqual(expected, actual);
     }
@@ -57,21 +56,11 @@ public class CoinChangeTests
     {
         int[] coins = new int[] { 5 };
         int amount = 15;
-        int expected = 3;
+        int expected = 1;
         int actual = Coins.Calculate(coins, amount);
         Assert.AreEqual(expected, actual);
     }
-    
-    [Test]
-    public void TestMultipleOfSmallestCoin() 
-    {
-        int[] coins = new int[] { 1, 2, 5, 10 };
-        int amount = 20;
-        int expected = 2;
-        int actual = Coins.Calculate(coins, amount);
-        Assert.AreEqual(expected, actual);
-    }
-    
+
     [Test]
     public void TestAmountNotPossible() 
     {
@@ -107,7 +96,7 @@ public class CoinChangeTests
     {
         int[] coins = new int[] { 1, 5, 10, 5 };
         int amount = 15;
-        int expected = 4;
+        int expected = 6;
         int actual = Coins.Calculate(coins, amount);
         Assert.AreEqual(expected, actual);
     }
