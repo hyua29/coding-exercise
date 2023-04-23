@@ -1,6 +1,5 @@
 namespace LeetCode.Atlassian;
 
-[TestFixture]
 public class CustomStack
 {
     private readonly int _n;
