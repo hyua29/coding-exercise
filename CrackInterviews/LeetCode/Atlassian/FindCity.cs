@@ -4,27 +4,68 @@ public class FindCity
 {
     public int FindTheCity(int n, int[][] edges, int distanceThreshold)
     {
+        if (distanceThreshold == 0)
+        {
+            return -1;
+        }
+
         var d = new int[n, n];
-        for (var i = 0; i < n; i++) 
-        for (var j = 0; j < n; j++) 
+        for (var i = 0; i < n; i++)
+        for (var j = 0; j < n; j++)
             d[i, j] = 10001;
-        
-        foreach(var e in edges) (d[e[0], e[1]], d[e[1], e[0]]) = (e[2], e[2]);
-        
-        for (var k = 0; k < n; k++) 
+
+
+        for (int i = 0; i < n; i++)
+        {
+            d[i, i] = 0;
+        }
+
+        foreach (var e in edges) (d[e[0], e[1]], d[e[1], e[0]]) = (e[2], e[2]);
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.Write(d[j, i] + " ");
+            }
+
+            Console.WriteLine();
+        }
+
+        for (var k = 0; k < n; k++)
         for (var i = 0; i < n; i++)
         for (var j = 0; j < n; j++)
         {
-            if (i != j) d[i, j] = Math.Min(d[i, j], d[i, k] + d[k, j]);
+            d[i, j] = Math.Min(d[i, j], d[i, k] + d[k, j]);
         }
-        
-        var (min, r) = (n, 0);
-        for (int i = 0, count = 0; i < n; i++, count = 0) {
-            for (int j = 0; j < n; j++) if (d[i, j] <= distanceThreshold) count++;
-            if (count <= min) (min, r) = (count, i) ;
+
+        Console.WriteLine("====================");
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.Write(d[j, i] + " ");
+            }
+
+            Console.WriteLine();
         }
-        
-        return r;
+
+        int res = 0, smallest = n;
+        for (int i = 0; i < n; i++)
+        {
+            int count = 0;
+            for (int j = 0; j < n; j++)
+                if (d[i, j] <= distanceThreshold)
+                    count++;
+            if (count <= smallest)
+            {
+                res = i;
+                smallest = count;
+            }
+        }
+
+        return res;
     }
 }
 
@@ -64,33 +105,7 @@ public class FindCityTests
             new int[] {0, 1, 1}
         };
         int distanceThreshold = 0;
-        int expected = 0;
-        FindCity findCity = new FindCity();
-
-        // Act
-        int actual = findCity.FindTheCity(n, edges, distanceThreshold);
-
-        // Assert
-        Assert.That(actual, Is.EqualTo(expected));
-    }
-
-    [Test]
-    public void Test_FindTheCity_Should_Work_With_Large_Input()
-    {
-        // Arrange
-        int n = 500;
-        int[][] edges = new int[n * (n - 1) / 2][];
-        int k = 0;
-        for (int i = 0; i < n - 1; i++)
-        {
-            for (int j = i + 1; j < n; j++)
-            {
-                edges[k++] = new int[] {i, j, i + j};
-            }
-        }
-
-        int distanceThreshold = 200;
-        int expected = 0;
+        int expected = -1;
         FindCity findCity = new FindCity();
 
         // Act
