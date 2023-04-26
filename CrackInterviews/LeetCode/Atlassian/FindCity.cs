@@ -9,43 +9,31 @@ public class FindCity
             return -1;
         }
 
-        var d = new int[n, n];
+        var buffer = new int[n, n];
         for (var i = 0; i < n; i++)
         for (var j = 0; j < n; j++)
-            d[i, j] = 10001;
+            buffer[i, j] = 10001;
 
 
         for (int i = 0; i < n; i++)
         {
-            d[i, i] = 0;
+            buffer[i, i] = 0;
         }
 
-        foreach (var e in edges) (d[e[0], e[1]], d[e[1], e[0]]) = (e[2], e[2]);
-
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                Console.Write(d[j, i] + " ");
-            }
-
-            Console.WriteLine();
-        }
+        foreach (var e in edges) (buffer[e[0], e[1]], buffer[e[1], e[0]]) = (e[2], e[2]);
 
         for (var k = 0; k < n; k++)
         for (var i = 0; i < n; i++)
         for (var j = 0; j < n; j++)
         {
-            d[i, j] = Math.Min(d[i, j], d[i, k] + d[k, j]);
+            buffer[i, j] = Math.Min(buffer[i, j], buffer[i, k] + buffer[k, j]);
         }
-
-        Console.WriteLine("====================");
 
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
             {
-                Console.Write(d[j, i] + " ");
+                Console.Write(buffer[j, i] + " ");
             }
 
             Console.WriteLine();
@@ -56,7 +44,7 @@ public class FindCity
         {
             int count = 0;
             for (int j = 0; j < n; j++)
-                if (d[i, j] <= distanceThreshold)
+                if (buffer[i, j] <= distanceThreshold)
                     count++;
             if (count <= smallest)
             {
