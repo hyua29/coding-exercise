@@ -7,17 +7,14 @@ public class MergeIntervals
         Array.Sort(intervals, (a, b) =>
         {
             var order = a[0] - b[0];
-            if (order == 0)
-            {
-                order = a[1] - b[1];
-            }
+            if (order == 0) order = a[1] - b[1];
 
             return order;
         });
 
         var results = new List<int[]>();
 
-        for (int i = 0; i < intervals.Length; i++)
+        for (var i = 0; i < intervals.Length; i++)
         {
             // we can reuse the existing interval to save memory but it's probably not worth it
             // var temp = intervals[i];
@@ -55,7 +52,7 @@ public class MergeIntervalsTests
     {
         // Arrange
         var mergeIntervals = new MergeIntervals();
-        int[][] intervals = Array.Empty<int[]>();
+        var intervals = Array.Empty<int[]>();
 
         // Act
         var result = mergeIntervals.Merge(intervals);
@@ -69,7 +66,7 @@ public class MergeIntervalsTests
     {
         // Arrange
         var mergeIntervals = new MergeIntervals();
-        int[][] intervals = new[] {new[] {1, 3}};
+        int[][] intervals = {new[] {1, 3}};
 
         // Act
         var result = mergeIntervals.Merge(intervals);
@@ -83,7 +80,7 @@ public class MergeIntervalsTests
     {
         // Arrange
         var mergeIntervals = new MergeIntervals();
-        int[][] intervals = new[] {new[] {1, 3}, new[] {4, 6}, new[] {7, 9}};
+        int[][] intervals = {new[] {1, 3}, new[] {4, 6}, new[] {7, 9}};
 
         // Act
         var result = mergeIntervals.Merge(intervals);
@@ -97,8 +94,8 @@ public class MergeIntervalsTests
     {
         // Arrange
         var mergeIntervals = new MergeIntervals();
-        int[][] intervals = new[] {new[] {1, 4}, new[] {2, 5}, new[] {7, 9}};
-        int[][] expected = new[] {new[] {1, 5}, new[] {7, 9}};
+        int[][] intervals = {new[] {1, 4}, new[] {2, 5}, new[] {7, 9}};
+        int[][] expected = {new[] {1, 5}, new[] {7, 9}};
 
         // Act
         var result = mergeIntervals.Merge(intervals);
@@ -112,8 +109,8 @@ public class MergeIntervalsTests
     {
         // Arrange
         var mergeIntervals = new MergeIntervals();
-        int[][] intervals = new[] {new[] {8, 10}, new[] {2, 6}, new[] {1, 3}, new[] {15, 18}};
-        int[][] expected = new[] {new[] {1, 6}, new[] {8, 10}, new[] {15, 18}};
+        int[][] intervals = {new[] {8, 10}, new[] {2, 6}, new[] {1, 3}, new[] {15, 18}};
+        int[][] expected = {new[] {1, 6}, new[] {8, 10}, new[] {15, 18}};
 
         // Act
         var result = mergeIntervals.Merge(intervals);
@@ -127,8 +124,8 @@ public class MergeIntervalsTests
     {
         // Arrange
         var mergeIntervals = new MergeIntervals();
-        int[][] intervals = new[] {new[] {1, 20}, new[] {6, 7}, new[] {13, 4}, new[] {15, 21}};
-        int[][] expected = new[] {new[] {1, 21}};
+        int[][] intervals = {new[] {1, 20}, new[] {6, 7}, new[] {13, 4}, new[] {15, 21}};
+        int[][] expected = {new[] {1, 21}};
 
         // Act
         var result = mergeIntervals.Merge(intervals);

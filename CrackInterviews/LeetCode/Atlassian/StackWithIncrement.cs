@@ -2,8 +2,8 @@ namespace LeetCode.Atlassian;
 
 public class CustomStack
 {
-    private readonly int _n;
     private readonly int[] _inc;
+    private readonly int _n;
     private readonly Stack<int> _stack;
 
     public CustomStack(int maxSize)
@@ -21,19 +21,19 @@ public class CustomStack
 
     public int Pop()
     {
-        int i = _stack.Count - 1;
+        var i = _stack.Count - 1;
         if (i < 0)
             return -1;
         if (i > 0)
             _inc[i - 1] += _inc[i];
-        int res = _stack.Pop() + _inc[i];
+        var res = _stack.Pop() + _inc[i];
         _inc[i] = 0;
         return res;
     }
 
     public void Increment(int k, int val)
     {
-        int i = Math.Min(k, _stack.Count) - 1;
+        var i = Math.Min(k, _stack.Count) - 1;
         if (i >= 0)
             _inc[i] += val;
     }
@@ -61,7 +61,7 @@ public class CustomStackTests
         var stack = new CustomStack(3);
 
         // Act
-        int result = stack.Pop();
+        var result = stack.Pop();
 
         // Assert
         Assert.IsTrue(result == -1);

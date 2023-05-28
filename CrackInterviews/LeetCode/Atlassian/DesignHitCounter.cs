@@ -2,9 +2,8 @@ namespace LeetCode.Atlassian;
 
 public class HitCounter
 {
-    private readonly Queue<int> _slidingWindow;
-
     private const int WindowSize = 300;
+    private readonly Queue<int> _slidingWindow;
 
     public HitCounter()
     {
@@ -27,9 +26,6 @@ public class HitCounter
 
     private void RemoveOutdatedData(int timestamp)
     {
-        while (_slidingWindow.TryPeek(out var t) && timestamp - WindowSize >= t)
-        {
-            _slidingWindow.Dequeue();
-        }
+        while (_slidingWindow.TryPeek(out var t) && timestamp - WindowSize >= t) _slidingWindow.Dequeue();
     }
 }

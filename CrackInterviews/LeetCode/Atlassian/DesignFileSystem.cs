@@ -12,29 +12,21 @@ public class FileSystem
 
     public bool CreatePath(string path, int value)
     {
-        if (!path.StartsWith('/'))
-        {
-            return false;
-        }
+        if (!path.StartsWith('/')) return false;
 
         if (_paths.Keys.Contains(path))
         {
             return false;
         }
-        else
+
+        var subPaths = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (subPaths.Length > 1)
         {
-            var subPaths = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
-            if (subPaths.Length > 1)
+            var s = string.Empty;
+            for (var i = 0; i < subPaths.Length - 1; i++)
             {
-                var s = string.Empty;
-                for (int i = 0; i < subPaths.Length - 1; i++)
-                {
-                    s += $"/{subPaths[i]}";
-                    if (!_paths.Keys.Contains(s))
-                    {
-                        return false;
-                    }
-                }
+                s += $"/{subPaths[i]}";
+                if (!_paths.Keys.Contains(s)) return false;
             }
         }
 
@@ -45,13 +37,8 @@ public class FileSystem
     public int Get(string path)
     {
         if (_paths.TryGetValue(path, out var results))
-        {
             return results;
-        }
-        else
-        {
-            return -1;
-        }
+        return -1;
     }
 }
 
@@ -68,7 +55,7 @@ public class FileSystemTests
         Assert.That(fs.Get("/leet/code"), Is.EqualTo(2));
         Assert.IsFalse(fs.CreatePath("/c/d", 1));
     }
-    
+
     [Test]
     public void Test2()
     {

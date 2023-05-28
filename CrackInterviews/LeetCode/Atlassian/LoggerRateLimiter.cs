@@ -9,31 +9,22 @@ public class Logger
     {
         _buckets = new int[10];
         _sets = new HashSet<string>[10];
-        for (int i = 0; i < _sets.Length; ++i)
-        {
-            _sets[i] = new HashSet<string>();
-        }
+        for (var i = 0; i < _sets.Length; ++i) _sets[i] = new HashSet<string>();
     }
 
     public bool ShouldPrintMessage(int timestamp, string message)
     {
-        int idx = timestamp % 10;
+        var idx = timestamp % 10;
         if (timestamp != _buckets[idx])
         {
             _sets[idx].Clear();
             _buckets[idx] = timestamp;
         }
 
-        for (int i = 0; i < _buckets.Length; ++i)
-        {
+        for (var i = 0; i < _buckets.Length; ++i)
             if (timestamp - _buckets[i] < 10)
-            {
                 if (_sets[i].Contains(message))
-                {
                     return false;
-                }
-            }
-        }
 
         _sets[idx].Add(message);
         return true;

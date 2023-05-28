@@ -6,11 +6,11 @@ public class SnakeGame
     public const string RIGHT = "R";
     public const string UP = "U";
     public const string DOWN = "D";
+    private readonly int[][] _food;
+    private readonly int _height;
+    private readonly LinkedList<(int Y, int X)> _snakeLocations;
 
     private readonly int _width;
-    private readonly int _height;
-    private readonly int[][] _food;
-    private readonly LinkedList<(int Y, int X)> _snakeLocations;
     private int _round;
     private int _score;
 
@@ -60,7 +60,7 @@ public class SnakeGame
         }
 
         if (HasHeadHitBody(newHeadLocation)) return -1;
-        
+
         _round++;
 
         return _score;
@@ -71,10 +71,7 @@ public class SnakeGame
         var current = _snakeLocations.First!.Next;
         while (current != null)
         {
-            if (current.Value.X == newHeadLocation.X && current.Value.Y == newHeadLocation.Y)
-            {
-                return true;
-            }
+            if (current.Value.X == newHeadLocation.X && current.Value.Y == newHeadLocation.Y) return true;
             current = current.Next;
         }
 
@@ -91,25 +88,15 @@ public class SnakeGame
     {
         (int Y, int X) newHeadLocation;
         if (direction.Equals(LEFT, StringComparison.Ordinal))
-        {
             newHeadLocation = (headLocation.Value.Y, headLocation.Value.X - 1);
-        }
         else if (direction.Equals(RIGHT, StringComparison.Ordinal))
-        {
             newHeadLocation = (headLocation.Value.Y, headLocation.Value.X + 1);
-        }
         else if (direction.Equals(UP, StringComparison.Ordinal))
-        {
             newHeadLocation = (headLocation.Value.Y - 1, headLocation.Value.X);
-        }
         else if (direction.Equals(DOWN, StringComparison.Ordinal))
-        {
             newHeadLocation = (headLocation.Value.Y + 1, headLocation.Value.X);
-        }
         else
-        {
             throw new InvalidOperationException($"Received value is: {direction}");
-        }
 
         return newHeadLocation;
     }
@@ -140,7 +127,7 @@ public class SnakeGame
         public void Test3()
         {
             var snakeGame = new SnakeGame(3, 3,
-                new int[][] {new[] {2, 0}, new[] {0, 0}, new[] {0, 2}, new[] {0, 1}, new[] {2, 2}, new[] {0, 1}});
+                new[] {new[] {2, 0}, new[] {0, 0}, new[] {0, 2}, new[] {0, 1}, new[] {2, 2}, new[] {0, 1}});
             Assert.That(snakeGame.Move(DOWN), Is.EqualTo(0));
             Assert.That(snakeGame.Move(DOWN), Is.EqualTo(1));
             Assert.That(snakeGame.Move(RIGHT), Is.EqualTo(1));

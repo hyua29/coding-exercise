@@ -7,12 +7,8 @@ public class TopKFrequentWords
         var dic = new Dictionary<string, int>();
 
         foreach (var w in words)
-        {
             if (!dic.TryAdd(w, 1))
-            {
                 dic[w]++;
-            }
-        }
 
         var results = dic
             .OrderByDescending(d => d.Value).ThenBy(d => d.Key)
@@ -27,24 +23,24 @@ public class TopKFrequentWords
 [TestFixture]
 public class TopKFrequentWordsTests
 {
-    private TopKFrequentWords _topKFrequentWords;
-
     [SetUp]
     public void SetUp()
     {
         _topKFrequentWords = new TopKFrequentWords();
     }
 
+    private TopKFrequentWords _topKFrequentWords;
+
     [Test]
     public void TopKFrequentWords_ReturnsTopKWords_WhenKIsLessThanWordsCount()
     {
         // Arrange
         string[] words = {"hello", "world", "hello", "world", "hello", "programming", "programming"};
-        int k = 2;
-        List<string> expected = new List<string> {"hello", "programming"};
+        var k = 2;
+        var expected = new List<string> {"hello", "programming"};
 
         // Act
-        IList<string> actual = _topKFrequentWords.TopKFrequent(words, k);
+        var actual = _topKFrequentWords.TopKFrequent(words, k);
 
         // Assert
         CollectionAssert.AreEqual(expected, actual);
@@ -55,11 +51,11 @@ public class TopKFrequentWordsTests
     {
         // Arrange
         string[] words = {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"};
-        int k = 4;
-        List<string> expected = new List<string> {"the", "is", "sunny", "day"};
+        var k = 4;
+        var expected = new List<string> {"the", "is", "sunny", "day"};
 
         // Act
-        IList<string> actual = _topKFrequentWords.TopKFrequent(words, k);
+        var actual = _topKFrequentWords.TopKFrequent(words, k);
 
         // Assert
         CollectionAssert.AreEqual(expected, actual);
@@ -70,11 +66,11 @@ public class TopKFrequentWordsTests
     {
         // Arrange
         string[] words = {"hello", "world", "hello", "world", "hello", "programming", "programming"};
-        int k = 10;
-        List<string> expected = new List<string> {"hello", "programming", "world"};
+        var k = 10;
+        var expected = new List<string> {"hello", "programming", "world"};
 
         // Act
-        IList<string> actual = _topKFrequentWords.TopKFrequent(words, k);
+        var actual = _topKFrequentWords.TopKFrequent(words, k);
 
         // Assert
         CollectionAssert.AreEqual(expected, actual);
@@ -85,11 +81,11 @@ public class TopKFrequentWordsTests
     {
         // Arrange
         string[] words = { };
-        int k = 2;
-        List<string> expected = new List<string> { };
+        var k = 2;
+        var expected = new List<string>();
 
         // Act
-        IList<string> actual = _topKFrequentWords.TopKFrequent(words, k);
+        var actual = _topKFrequentWords.TopKFrequent(words, k);
 
         // Assert
         CollectionAssert.AreEqual(expected, actual);
@@ -100,11 +96,11 @@ public class TopKFrequentWordsTests
     {
         // Arrange
         string[] words = {"hello", "world", "hello", "world", "hello", "programming", "programming"};
-        int k = 0;
-        List<string> expected = new List<string> { };
+        var k = 0;
+        var expected = new List<string>();
 
         // Act
-        IList<string> actual = _topKFrequentWords.TopKFrequent(words, k);
+        var actual = _topKFrequentWords.TopKFrequent(words, k);
 
         // Assert
         CollectionAssert.AreEqual(expected, actual);

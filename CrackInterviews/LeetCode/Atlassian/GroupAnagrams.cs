@@ -10,13 +10,9 @@ public class GroupAnagrams
         {
             var ss = string.Join("", s.OrderBy(c => c));
             if (dic.ContainsKey(ss))
-            {
                 dic[ss].Add(s);
-            }
             else
-            {
-                dic.Add(ss, new List<string>{ s });
-            }
+                dic.Add(ss, new List<string> {s});
         }
 
         return dic.Select(p => p.Value).OrderBy(v => v.Count).ToList();

@@ -1,6 +1,6 @@
-using System.Diagnostics;
-
 namespace LeetCode.Atlassian;
+
+using System.Diagnostics;
 
 public class ArrangingCoins
 {

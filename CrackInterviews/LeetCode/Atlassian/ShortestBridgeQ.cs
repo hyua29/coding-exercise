@@ -9,7 +9,7 @@ public class ShortestBridgeQ
 
         var firstIsland = new Queue<(int Y, int X)>();
 
-        HashSet<(int Y, int X)> firstIslandHash = new HashSet<(int Y, int X)>();
+        var firstIslandHash = new HashSet<(int Y, int X)>();
         MarkIsland(grid, coordinate, firstIsland, firstIslandHash);
 
         var queue = firstIsland;
@@ -30,7 +30,7 @@ public class ShortestBridgeQ
             level++;
 
             var count = queue.Count;
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var c = queue.Dequeue();
 
@@ -62,47 +62,27 @@ public class ShortestBridgeQ
         queue.Enqueue(coordinate);
 
         while (queue.TryDequeue(out var c))
-        {
             if (grid[c.Y][c.X] == 1 && !set.Contains((c.Y, c.X)))
             {
                 set.Add(c);
                 island.Enqueue(c);
 
-                if (c.Y + 1 < grid.Length)
-                {
-                    queue.Enqueue((c.Y + 1, c.X));
-                }
+                if (c.Y + 1 < grid.Length) queue.Enqueue((c.Y + 1, c.X));
 
-                if (c.Y - 1 >= 0)
-                {
-                    queue.Enqueue((c.Y - 1, c.X));
-                }
+                if (c.Y - 1 >= 0) queue.Enqueue((c.Y - 1, c.X));
 
-                if (c.X + 1 < grid[0].Length)
-                {
-                    queue.Enqueue((c.Y, c.X + 1));
-                }
+                if (c.X + 1 < grid[0].Length) queue.Enqueue((c.Y, c.X + 1));
 
-                if (c.X - 1 >= 0)
-                {
-                    queue.Enqueue((c.Y, c.X - 1));
-                }
+                if (c.X - 1 >= 0) queue.Enqueue((c.Y, c.X - 1));
             }
-        }
     }
 
     private static (int Y, int X) FindFirstIsland(int[][] grid)
     {
-        for (int y = 0; y < grid.Length; y++)
-        {
-            for (int x = 0; x < grid[0].Length; x++)
-            {
-                if (grid[y][x] == 1)
-                {
-                    return (y, x);
-                }
-            }
-        }
+        for (var y = 0; y < grid.Length; y++)
+        for (var x = 0; x < grid[0].Length; x++)
+            if (grid[y][x] == 1)
+                return (y, x);
 
         throw new ArgumentException("The grid should contain exactly 2 islands");
     }
@@ -115,11 +95,11 @@ public class ShortestBridgeQTests
     public void ShortestBridge_ShouldReturnCorrectResult_WhenGivenValidInput()
     {
         // Arrange
-        var grid = new int[][]
+        var grid = new[]
         {
-            new int[] {0, 1, 0},
-            new int[] {0, 0, 0},
-            new int[] {0, 0, 1}
+            new[] {0, 1, 0},
+            new[] {0, 0, 0},
+            new[] {0, 0, 1}
         };
 
         var shortestBridgeQ = new ShortestBridgeQ();
@@ -135,10 +115,10 @@ public class ShortestBridgeQTests
     public void ShortestBridge_ShouldReturnCorrectResult_WhenGivenValidInput1()
     {
         // Arrange
-        var grid = new int[][]
+        var grid = new[]
         {
-            new int[] {0, 1},
-            new int[] {1, 0}
+            new[] {0, 1},
+            new[] {1, 0}
         };
 
         var shortestBridgeQ = new ShortestBridgeQ();
@@ -154,13 +134,13 @@ public class ShortestBridgeQTests
     public void ShortestBridge_ShouldReturnCorrectResult_WhenGivenValidInput2()
     {
         // Arrange
-        var grid = new int[][]
+        var grid = new[]
         {
-            new int[] {1, 1, 1, 1, 1},
-            new int[] {1, 0, 0, 0, 1},
-            new int[] {1, 0, 1, 0, 1},
-            new int[] {1, 0, 0, 0, 1},
-            new int[] {1, 1, 1, 1, 1}
+            new[] {1, 1, 1, 1, 1},
+            new[] {1, 0, 0, 0, 1},
+            new[] {1, 0, 1, 0, 1},
+            new[] {1, 0, 0, 0, 1},
+            new[] {1, 1, 1, 1, 1}
         };
 
         var shortestBridgeQ = new ShortestBridgeQ();
@@ -176,11 +156,11 @@ public class ShortestBridgeQTests
     public void ShortestBridge_ShouldThrowArgumentException_WhenGivenInvalidInput()
     {
         // Arrange
-        var grid = new int[][]
+        var grid = new[]
         {
-            new int[] {0, 0, 0},
-            new int[] {0, 0, 0},
-            new int[] {0, 0, 0}
+            new[] {0, 0, 0},
+            new[] {0, 0, 0},
+            new[] {0, 0, 0}
         };
 
         var shortestBridgeQ = new ShortestBridgeQ();

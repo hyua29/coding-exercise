@@ -9,17 +9,14 @@ public class RankTeamsByVotes
     {
         Debug.Assert(votes != null);
 
-        if (votes.Length == 0 || votes[0].Length == 0)
-        {
-            return string.Empty;
-        }
+        if (votes.Length == 0 || votes[0].Length == 0) return string.Empty;
 
         var numOfTeams = votes[0].Length;
 
         var teamOrder = new char[numOfTeams];
         var teamNotArranged = new HashSet<char>(votes[0].Select(x => x));
 
-        for (int i = 0; i < teamOrder.Length; i++)
+        for (var i = 0; i < teamOrder.Length; i++)
         {
             var chosenTeam = DetermineTeamOrder(votes, new HashSet<char>(teamNotArranged));
 
@@ -35,24 +32,17 @@ public class RankTeamsByVotes
         Debug.Assert(votes?.Length > 0);
         Debug.Assert(candidates != null);
 
-        for (int i = 0; i < votes[0].Length; i++)
+        for (var i = 0; i < votes[0].Length; i++)
         {
             var buffer = new int[26];
 
             foreach (var v in votes)
-            {
                 if (candidates.Contains(v[i]))
-                {
                     buffer[v[i] - 'A']++;
-                }
-            }
 
             NarrowCandidates(buffer, candidates);
 
-            if (candidates.Count == 1)
-            {
-                return candidates.First();
-            }
+            if (candidates.Count == 1) return candidates.First();
         }
 
         // Teams are still tied after considering all positions, we rank them alphabetically based on their team letter.
@@ -67,19 +57,13 @@ public class RankTeamsByVotes
         var maxCount = buffer.Max();
 
         // Nothing is in the buffer, we can't narrow down the candidates
-        if (maxCount == 0)
-        {
-            return;
-        }
+        if (maxCount == 0) return;
 
-        for (int i = 0; i < buffer.Length; i++)
+        for (var i = 0; i < buffer.Length; i++)
         {
             var count = buffer[i];
 
-            if (count != maxCount)
-            {
-                candidates.Remove((char) ('A' + i));
-            }
+            if (count != maxCount) candidates.Remove((char) ('A' + i));
         }
     }
 
