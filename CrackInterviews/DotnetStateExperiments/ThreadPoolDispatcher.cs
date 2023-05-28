@@ -1,16 +1,15 @@
-using System.Collections.Concurrent;
-
 namespace DotnetStateExperiments;
+
+using System.Collections.Concurrent;
 
 public class ThreadPoolDispatcher
 {
-    private ConcurrentBag<Task> _tasks;
+    private readonly ManualResetEventSlim _dispatcherResetEvent;
 
-    private Thread _TaskInspector;
+    private readonly AutoResetEvent _hasWork;
 
-    private ManualResetEventSlim _dispatcherResetEvent;
-
-    private AutoResetEvent _hasWork;
+    private readonly Thread _TaskInspector;
+    private readonly ConcurrentBag<Task> _tasks;
 
     public ThreadPoolDispatcher()
     {
@@ -24,12 +23,10 @@ public class ThreadPoolDispatcher
     {
         // Run the loop until the dispatcher is shut down
         while (_dispatcherResetEvent.IsSet)
-        {
             if (_hasWork.WaitOne())
             {
                 // var completedTask = _tasks.
             }
-        }
     }
 
     public void Start()

@@ -2,27 +2,18 @@ namespace C4;
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using NUnit.Framework;
 using DataStructures.Models;
+using NUnit.Framework;
 
 public class FindCommonAncestor
 {
     public static BinaryTreeNode<int> Calculate(BinaryTreeNode<int> root, BinaryTreeNode<int> p, BinaryTreeNode<int> q)
     {
-        if (root == null || p == null | q == null)
-        {
-            return null;
-        }
+        if (root == null || (p == null) | (q == null)) return null;
 
-        if (root == p || root == q)
-        {
-            return root;
-        }
+        if (root == p || root == q) return root;
 
-        if (!IsNodeInTree(root, p) || !IsNodeInTree(root, q))
-        {
-            return null;
-        }
+        if (!IsNodeInTree(root, p) || !IsNodeInTree(root, q)) return null;
 
         return CommonAncestorHelper(root, p, q);
     }
@@ -32,18 +23,12 @@ public class FindCommonAncestor
     {
         Debug.Assert(root != null);
 
-        if (root == p || root == q)
-        {
-            return root;
-        }
+        if (root == p || root == q) return root;
 
         var pOnLeft = IsNodeInTree(root.LeftNode, p);
         var qOnLeft = IsNodeInTree(root.LeftNode, q);
 
-        if (pOnLeft != qOnLeft)
-        {
-            return root;
-        }
+        if (pOnLeft != qOnLeft) return root;
 
         var nextRoot = pOnLeft ? root.LeftNode : root.RightNode;
 
@@ -52,15 +37,9 @@ public class FindCommonAncestor
 
     private static bool IsNodeInTree(BinaryTreeNode<int> root, BinaryTreeNode<int> nodeToSearch)
     {
-        if (root == null || nodeToSearch == null)
-        {
-            return false;
-        }
+        if (root == null || nodeToSearch == null) return false;
 
-        if (root == nodeToSearch)
-        {
-            return true;
-        }
+        if (root == nodeToSearch) return true;
 
         return IsNodeInTree(root.LeftNode, nodeToSearch) || IsNodeInTree(root.RightNode, nodeToSearch);
     }
@@ -72,7 +51,7 @@ public class FindCommonAncestor
         public void Calculate_Test(BinaryTreeNode<int> root, BinaryTreeNode<int> p, BinaryTreeNode<int> q,
             BinaryTreeNode<int> expectedCommonAncestor)
         {
-            Assert.That(FindCommonAncestor.Calculate(root, p, q), Is.EqualTo(expectedCommonAncestor));
+            Assert.That(Calculate(root, p, q), Is.EqualTo(expectedCommonAncestor));
         }
 
         private static IEnumerable<TestCaseData> GetTestData()

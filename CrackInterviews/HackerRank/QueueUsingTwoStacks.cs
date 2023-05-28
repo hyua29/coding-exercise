@@ -1,46 +1,43 @@
+namespace HackerRank;
+
 using System;
 using System.Collections.Generic;
 
-namespace HackerRank
+public class QueueUsingTwoStacks
 {
-    public class QueueUsingTwoStacks
+    public static void Calculate(string[] args)
     {
-        public static void Calculate(String[] args)
+        var aStack = new Stack<int>();
+        var bStack = new Stack<int>();
+
+        // Number of queries
+        var q = Convert.ToInt32(Console.ReadLine());
+
+        for (var i = 0; i < q; i++)
         {
-            Stack<int> aStack = new Stack<int>();
-            Stack<int> bStack = new Stack<int>();
+            var line_temp = Console.ReadLine().Split(' ');
+            var line = Array.ConvertAll(line_temp, int.Parse);
 
-            // Number of queries
-            int q = Convert.ToInt32(Console.ReadLine());
+            if (bStack.Count == 0)
+                while (aStack.Count != 0)
+                    bStack.Push(aStack.Pop());
 
-            for (int i = 0; i < q; i++)
+            // Enqueue
+            if (line.Length == 2)
             {
-                string[] line_temp = Console.ReadLine().Split(' ');
-                int[] line = Array.ConvertAll(line_temp, Int32.Parse);
-
                 if (bStack.Count == 0)
-                {
-                    while (aStack.Count != 0)
-                        bStack.Push(aStack.Pop());
-                }
-
-                // Enqueue
-                if (line.Length == 2)
-                {
-                    if (bStack.Count == 0)
-                        bStack.Push(line[1]);
-                    else
-                        aStack.Push(line[1]);
-                }
+                    bStack.Push(line[1]);
                 else
-                {
-                    // Dequeue
-                    if (line[0] == 2)
-                        bStack.Pop();
-                    // Print
-                    else if (line[0] == 3)
-                        Console.WriteLine(bStack.Peek());
-                }
+                    aStack.Push(line[1]);
+            }
+            else
+            {
+                // Dequeue
+                if (line[0] == 2)
+                    bStack.Pop();
+                // Print
+                else if (line[0] == 3)
+                    Console.WriteLine(bStack.Peek());
             }
         }
     }

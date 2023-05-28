@@ -1,6 +1,5 @@
-﻿namespace HackerRank
+﻿namespace HackerRank;
+
+public class NotUsed
 {
-    public class NotUsed
-    {
-    }
 }

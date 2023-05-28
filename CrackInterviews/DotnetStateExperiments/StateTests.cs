@@ -1,19 +1,35 @@
-using Stateless;
-using Stateless.Graph;
-
 namespace DotnetStateExperiments;
+
+using Stateless;
 
 public class Tests
 {
+    public enum State
+    {
+        Connected,
+        Ringing,
+        OffHook,
+        OnHold
+    }
+
+    public enum Trigger
+    {
+        CallDialled,
+        PlacedOnHold,
+        LeftMessage,
+        UnmuteMicrophone,
+        MuteMicrophone,
+        CallPickedUp
+    }
+
     private event EventHandler<bool> MyEvent;
-    
+
 
     [SetUp]
     public void Setup()
     {
         MyEvent += (o, b) => { };
         MyEvent.Invoke(this, false);
-
     }
 
     [Test]
@@ -23,7 +39,7 @@ public class Tests
 
         phoneCall.Configure(State.OffHook)
             .Permit(Trigger.CallDialled, State.Ringing);
-        
+
         phoneCall.Configure(State.Ringing)
             .Permit(Trigger.CallPickedUp, State.Connected);
 
@@ -62,23 +78,5 @@ public class Tests
     private void StartCallTimer()
     {
         Console.WriteLine(nameof(StartCallTimer));
-    }
-
-    public enum State
-    {
-        Connected,
-        Ringing,
-        OffHook,
-        OnHold
-    }
-
-    public enum Trigger
-    {
-        CallDialled,
-        PlacedOnHold,
-        LeftMessage,
-        UnmuteMicrophone,
-        MuteMicrophone,
-        CallPickedUp
     }
 }

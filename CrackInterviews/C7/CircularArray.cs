@@ -1,10 +1,10 @@
-using System.Collections;
-
 namespace C7;
+
+using System.Collections;
 
 public class CircularArray<T> : IEnumerable<T>
 {
-    private T[] _innerArray;
+    private readonly T[] _innerArray;
 
     private int _pointer;
 
@@ -28,7 +28,7 @@ public class CircularArray<T> : IEnumerable<T>
     {
         return GetEnumerator();
     }
-    
+
     private class CircularArrayIEnumerator<T> : IEnumerator<T>
     {
         private readonly T[] _array;
@@ -60,8 +60,6 @@ public class CircularArray<T> : IEnumerable<T>
     }
 }
 
-
-
 [TestFixture]
 public class BuildOrderTests
 {
@@ -80,9 +78,6 @@ public class BuildOrderTests
         circularArray[8] = 8;
         circularArray[9] = 9;
 
-        foreach (var v in circularArray)
-        {
-            Console.WriteLine(v);
-        }
+        foreach (var v in circularArray) Console.WriteLine(v);
     }
 }

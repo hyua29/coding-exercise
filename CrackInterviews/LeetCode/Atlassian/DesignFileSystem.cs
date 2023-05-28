@@ -14,10 +14,7 @@ public class FileSystem
     {
         if (!path.StartsWith('/')) return false;
 
-        if (_paths.Keys.Contains(path))
-        {
-            return false;
-        }
+        if (_paths.Keys.Contains(path)) return false;
 
         var subPaths = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
         if (subPaths.Length > 1)

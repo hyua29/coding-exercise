@@ -1,43 +1,33 @@
-﻿namespace C3
+﻿namespace C3;
+
+using System.Collections.Generic;
+
+public class QueueViaStacks<T>
 {
-    using System.Collections.Generic;
+    private readonly Stack<T> _stackNewest;
+    private readonly Stack<T> _stackOldest;
 
-    public class QueueViaStacks<T>
+    public QueueViaStacks()
     {
-        private Stack<T> _stackNewest;
-        private Stack<T> _stackOldest;
+        _stackNewest = new Stack<T>();
+        _stackOldest = new Stack<T>();
+    }
 
-        public QueueViaStacks()
-        {
-            _stackNewest = new Stack<T>();
-            _stackOldest = new Stack<T>();
-        }
+    public int Count => _stackNewest.Count + _stackOldest.Count;
 
-        public int Count => _stackNewest.Count + _stackOldest.Count;
+    public void Push(T item)
+    {
+        _stackNewest.Push(item);
+    }
 
-        public void Push(T item)
-        {
-            _stackNewest.Push(item);
-        }
+    public T Pop()
+    {
+        if (Count <= 0) return default;
 
-        public T Pop()
-        {
-            if (Count <= 0)
-            {
-                return default(T);
-            }
+        if (_stackOldest.TryPop(out var result)) return result;
 
-            if (_stackOldest.TryPop(out T result))
-            {
-                return result;
-            }
+        while (_stackNewest.TryPop(out var item)) _stackOldest.Push(item);
 
-            while (_stackNewest.TryPop(out T item))
-            {
-                _stackOldest.Push(item);
-            }
-
-            return _stackOldest.Pop();
-        }
+        return _stackOldest.Pop();
     }
 }

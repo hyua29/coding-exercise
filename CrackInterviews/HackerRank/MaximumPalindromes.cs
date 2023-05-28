@@ -1,30 +1,29 @@
-namespace HackerRank
+namespace HackerRank;
+
+public class MaximumPalindromes
 {
-    public class MaximumPalindromes
+    public static void Initialize(string s)
     {
-        public static void Initialize(string s)
+        // This function is called once before all queries.
+    }
+
+    public static int AnswerQuery(int l, int r)
+    {
+        // Return the answer for this query modulo 1000000007.
+        return 0;
+    }
+
+    private static bool IsPerlinedome(string input)
+    {
+        var left = 0;
+        var right = input.Length - 1;
+        while (left <= right)
         {
-            // This function is called once before all queries.
+            if (input[left] != input[right]) return false;
+            left++;
+            right++;
         }
 
-        public static int AnswerQuery(int l, int r)
-        {
-            // Return the answer for this query modulo 1000000007.
-            return 0;
-        }
-
-        private static bool IsPerlinedome(string input)
-        {
-            var left = 0;
-            var right = input.Length - 1;
-            while (left <= right)
-            {
-                if (input[left] != input[right]) return false;
-                left++;
-                right++;
-            }
-
-            return true;
-        }
+        return true;
     }
 }

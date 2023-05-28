@@ -1,28 +1,27 @@
-namespace DataStructures.Models
+namespace DataStructures.Models;
+
+public class GraphNode<T>
 {
-    public class GraphNode<T>
+    public bool HasVisited;
+
+    public GraphNode(T data)
     {
-        public bool HasVisited;
+        Data = data;
+        AdjcentNodes = new List<GraphNode<T>>();
+        HasVisited = false;
+    }
 
-        public GraphNode(T data)
-        {
-            Data = data;
-            AdjcentNodes = new List<GraphNode<T>>();
-            HasVisited = false;
-        }
+    public GraphNode(T data, IList<GraphNode<T>> adjcentNodes) : this(data)
+    {
+        AdjcentNodes = adjcentNodes;
+    }
 
-        public GraphNode(T data, IList<GraphNode<T>> adjcentNodes) : this(data)
-        {
-            AdjcentNodes = adjcentNodes;
-        }
+    public T Data { get; }
 
-        public T Data { get; }
+    public IList<GraphNode<T>> AdjcentNodes { get; }
 
-        public IList<GraphNode<T>> AdjcentNodes { get; }
-
-        public override string ToString()
-        {
-            return Data.ToString();
-        }
+    public override string ToString()
+    {
+        return Data.ToString();
     }
 }

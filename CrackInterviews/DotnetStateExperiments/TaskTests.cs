@@ -10,14 +10,12 @@ public class TaskTests
         {
             var s = SynchronizationContext.Current;
             Console.WriteLine($"Test starting, current thread id - {Thread.CurrentThread.ManagedThreadId}");
-
         });
-        
-        
+
+
         t.Start();
 
         t.Join();
-
     }
 
     [Test]

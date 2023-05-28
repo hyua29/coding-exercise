@@ -19,10 +19,7 @@ public class RobotInGrid
         Debug.Assert(input != null);
 
         var steps = input.GetLength(0) + input.GetLength(1) - 2;
-        if (steps <= 0)
-        {
-            return Array.Empty<Direction>();
-        }
+        if (steps <= 0) return Array.Empty<Direction>();
 
         var buffer = new Direction[steps];
 
@@ -42,16 +39,10 @@ public class RobotInGrid
             }
 
             // Go Right
-            if (input[current.Y, current.X + 1])
-            {
-                toExplore.Push((current.Y, current.X + 1, Direction.Right));
-            }
+            if (input[current.Y, current.X + 1]) toExplore.Push((current.Y, current.X + 1, Direction.Right));
 
             // Go Down
-            if (input[current.Y + 1, current.X])
-            {
-                toExplore.Push((current.Y + 1, current.X, Direction.Down));
-            }
+            if (input[current.Y + 1, current.X]) toExplore.Push((current.Y + 1, current.X, Direction.Down));
         }
 
         return foundSolution ? buffer : null;
