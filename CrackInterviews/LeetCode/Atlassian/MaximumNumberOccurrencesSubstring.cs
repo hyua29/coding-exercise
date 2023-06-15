@@ -5,52 +5,28 @@ namespace LeetCode.Atlassian;
 /// </summary>
 public class MaximumNumberOccurrencesSubstring
 {
+    /// <summary>
+    /// maxSize has no impact on the results
+    /// </summary>
     public int MaxFreq(string s, int maxLetters, int minSize, int maxSize)
     {
-        // Debug.Assert(minSize >= 1);
-        // Debug.Assert(minSize <= maxSize);
-        // Debug.Assert(minSize <= s.Length);
-
-        var buffer = new Dictionary<string, int>();
+        var freq = new Dictionary<string, int>();
 
         for (int i = 0; i < s.Length - minSize + 1; i++)
         {
-            var substirngs = GetSubStrings(s, i, minSize, maxSize);
-
-            foreach (var sub in substirngs)
-            {
-                if (buffer.Keys.Contains(sub))
-                {
-                    buffer[sub]++;
-                }
-                else
-                {
-                    buffer.Add(sub, 1);
-                }
-            }
+            var substring = s.Substring(i, minSize);
+            IsSubstringValid(substring, maxLetters, freq);
         }
 
-        return buffer.DefaultIfEmpty().Max(b => b.Value);
+        return freq.DefaultIfEmpty().Max(b => b.Value);
     }
 
-    private static IList<string> GetSubStrings(string s, int currentIndex, int minSize, int maxSize)
+    private static void IsSubstringValid(string substring, int maxLetters, Dictionary<string, int> freq)
     {
-        var substrings = new List<string>();
-
-        var start = s.Substring(currentIndex, minSize);
-        substrings.Add(start);
-        for (int i = 0; i < maxSize - minSize; i++)
+        if (new HashSet<char>(substring).Count <= maxLetters)
         {
-            if (currentIndex + i + minSize >= s.Length)
-            {
-                break;
-            }
-
-            start += s[currentIndex + i + minSize];
-            substrings.Add(start);
+            freq[substring] = freq.TryGetValue(substring, out var value) ? value + 1 : 1;
         }
-
-        return substrings;
     }
 }
 
@@ -71,6 +47,23 @@ public class SolutionTests
         int result = solution.MaxFreq(s, maxLetters, minSize, maxSize);
 
         // Assert
-        Assert.That(result, Is.EqualTo(2));
+        Assert.That(result, Is.EqualTo(2), "aab is repeated twice");
+    }
+
+    [Test]
+    public void MaxFreq_ExampleCase2()
+    {
+        // Arrange
+        var solution = new MaximumNumberOccurrencesSubstring();
+        string s = "aaaa";
+        int maxLetters = 1;
+        int minSize = 3;
+        int maxSize = 3;
+
+        // Act
+        int result = solution.MaxFreq(s, maxLetters, minSize, maxSize);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(2), "a is repeated three times");
     }
 }
