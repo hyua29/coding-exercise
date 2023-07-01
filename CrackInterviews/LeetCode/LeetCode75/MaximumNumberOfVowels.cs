@@ -1,5 +1,8 @@
 namespace LeetCode.LeetCode75;
 
+/// <summary>
+/// https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/
+/// </summary>
 public class MaximumNumberOfVowels
 {
     private static readonly ISet<char> Vowels = new HashSet<char> {'a', 'e', 'i', 'o', 'u'};

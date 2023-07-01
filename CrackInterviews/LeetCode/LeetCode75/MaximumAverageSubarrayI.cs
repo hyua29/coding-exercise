@@ -1,5 +1,8 @@
 namespace LeetCode.LeetCode75;
 
+/// <summary>
+/// https://leetcode.com/problems/maximum-average-subarray-i/?envType=study-plan-v2&envId=leetcode-75
+/// </summary>
 public class MaximumAverageSubarrayI
 {
     public double FindMaxAverage(int[] nums, int k)
