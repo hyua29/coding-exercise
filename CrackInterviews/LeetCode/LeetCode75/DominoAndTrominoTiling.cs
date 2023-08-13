@@ -1,5 +1,9 @@
 ﻿namespace LeetCode.LeetCode75;
 
+/// <summary>
+/// https://leetcode.com/problems/domino-and-tromino-tiling/solutions/2944069/video/?envType=study-plan-v2&envId=leetcode-75
+/// https://leetcode.com/problems/domino-and-tromino-tiling/solutions/116581/detail-and-explanation-of-o-n-solution-why-dp-n-2-d-n-1-dp-n-3/?envType=study-plan-v2&envId=leetcode-75
+/// </summary>
 public class DominoAndTrominoTiling
 {
     public int NumTilings(int n) {
