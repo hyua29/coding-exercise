@@ -9,6 +9,8 @@ public class MaximumNumberOfVowels
 
     public int MaxVowels(string s, int k)
     {
+        if (s.Length == 0) return 0;
+
         var vowelCount = 0;
         for (int i = 0; i < k; i++)
         {
