@@ -23,7 +23,7 @@ public class BuyStocksWithFee
     {
         var bufferHasStock = -prices[0];
         var bufferNoStock = 0;
-        
+
         for (int i = 0; i < prices.Length ; i++)
         {
             var temp = bufferHasStock;
