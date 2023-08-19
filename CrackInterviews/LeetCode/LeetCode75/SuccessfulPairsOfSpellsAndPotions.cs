@@ -1,5 +1,8 @@
 namespace LeetCode.LeetCode75;
 
+/// <summary>
+/// https://leetcode.com/problems/successful-pairs-of-spells-and-potions/description/?envType=study-plan-v2&envId=leetcode-75
+/// </summary>
 public class SuccessfulPairsOfSpellsAndPotions
 {
     public int[] SuccessfulPairs(int[] spells, int[] potions, long success)
