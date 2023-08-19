@@ -9,11 +9,6 @@ public class SuccessfulPairsOfSpellsAndPotions
 
         for (int i = 0; i < spells.Length; i++)
         {
-            if (i == spells.Length - 3)
-            {
-                Console.WriteLine();
-            }
-
             var temp = success / (float) spells[i];
 
             var target = (int) Math.Ceiling(temp);
