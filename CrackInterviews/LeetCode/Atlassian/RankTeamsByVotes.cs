@@ -9,62 +9,37 @@ public class RankTeamsByVotes
     {
         Debug.Assert(votes != null);
 
-        if (votes.Length == 0 || votes[0].Length == 0) return string.Empty;
-
-        var numOfTeams = votes[0].Length;
-
-        var teamOrder = new char[numOfTeams];
-        var teamNotArranged = new HashSet<char>(votes[0].Select(x => x));
-
-        for (var i = 0; i < teamOrder.Length; i++)
+        var cache = new List<Dictionary<char, int>>(votes[0].Length);
+        foreach (var c in votes[0])
         {
-            var chosenTeam = DetermineTeamOrder(votes, new HashSet<char>(teamNotArranged));
+            var dict = new Dictionary<char, int>();
+            cache.Add(dict);
 
-            teamOrder[i] = chosenTeam;
-            teamNotArranged.Remove(chosenTeam);
+            foreach (var cc in votes[0])
+            {
+                dict[cc] = 0;
+            }
         }
 
-        return string.Join("", teamOrder);
-    }
-
-    private static char DetermineTeamOrder(string[] votes, HashSet<char> candidates)
-    {
-        Debug.Assert(votes?.Length > 0);
-        Debug.Assert(candidates != null);
-
-        for (var i = 0; i < votes[0].Length; i++)
+        for (int i = 0; i < votes[0].Length; i++)
         {
-            var buffer = new int[26];
+            for (int j = 0; j < votes.Length; j++)
+            {
+                var c = votes[j][i];
 
-            foreach (var v in votes)
-                if (candidates.Contains(v[i]))
-                    buffer[v[i] - 'A']++;
-
-            NarrowCandidates(buffer, candidates);
-
-            if (candidates.Count == 1) return candidates.First();
+                cache[i][c]++;
+            }
         }
 
-        // Teams are still tied after considering all positions, we rank them alphabetically based on their team letter.
-        return candidates.OrderBy(c => c).First();
-    }
+        var result = votes[0].OrderBy(c => c).OrderByDescending(c => cache[0][c]);
 
-    private static void NarrowCandidates(int[] buffer, HashSet<char> candidates)
-    {
-        Debug.Assert(buffer != null);
-        Debug.Assert(buffer.Length == 26);
-
-        var maxCount = buffer.Max();
-
-        // Nothing is in the buffer, we can't narrow down the candidates
-        if (maxCount == 0) return;
-
-        for (var i = 0; i < buffer.Length; i++)
+        for (int i = 1; i < cache.Count; i++)
         {
-            var count = buffer[i];
-
-            if (count != maxCount) candidates.Remove((char) ('A' + i));
+            var index = i;
+            result = result.ThenByDescending(c => cache[index][c]);
         }
+
+        return string.Join("", result.ToArray());
     }
 
     [TestFixture]
@@ -81,6 +56,7 @@ public class RankTeamsByVotes
         public static IEnumerable<TestCaseData> GetTestCaseData()
         {
             yield return new TestCaseData(new[] {"ABC", "ACB", "ABC", "ACB", "ACB"}, "ACB");
+            yield return new TestCaseData(new[] {"BCA", "CAB", "CBA", "ABC", "ACB", "BAC"}, "ABC");
             yield return new TestCaseData(new[] {"WXYZ", "XYZW"}, "XWYZ");
             yield return new TestCaseData(new[] {"ZMNAGUEDSJYLBOPHRQICWFXTVK"}, "ZMNAGUEDSJYLBOPHRQICWFXTVK");
         }
