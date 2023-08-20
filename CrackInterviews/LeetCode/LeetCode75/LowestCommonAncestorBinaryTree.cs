@@ -4,6 +4,7 @@ namespace LeetCode.LeetCode75;
 
 /// <summary>
 /// https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/?envType=study-plan-v2&envId=leetcode-75
+/// https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/65226/my-java-solution-which-is-easy-to-understand/?envType=study-plan-v2&envId=leetcode-75
 /// </summary>
 public class LowestCommonAncestorBinaryTree
 {
