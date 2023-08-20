@@ -8,7 +8,6 @@ public class RankTeamsByVotes
     public string RankTeams(string[] votes)
     {
         Debug.Assert(votes != null);
-
         var cache = new List<Dictionary<char, int>>(votes[0].Length);
         foreach (var c in votes[0])
         {
@@ -31,6 +30,7 @@ public class RankTeamsByVotes
             }
         }
 
+        // ReSharper disable once MultipleOrderBy - the result needs to be sorted by alphabetical order (OrderBy is a stable sort)
         var result = votes[0].OrderBy(c => c).OrderByDescending(c => cache[0][c]);
 
         for (int i = 1; i < cache.Count; i++)
