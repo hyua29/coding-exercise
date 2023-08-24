@@ -16,7 +16,7 @@ public class FileSystem
 
         if (_paths.Keys.Contains(path)) return false;
 
-        var subPaths = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        var subPaths = path.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         if (subPaths.Length > 1)
         {
             var s = string.Empty;
