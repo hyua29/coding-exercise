@@ -1,5 +1,8 @@
 namespace LeetCode.Atlassian;
 
+/// <summary>
+/// https://leetcode.com/problems/sliding-window-maximum/
+/// </summary>
 public class SlidingWindowMaximum
 {
     public int[] MaxSlidingWindow(int[] nums, int k)
@@ -8,18 +11,64 @@ public class SlidingWindowMaximum
 
         var result = new int[nums.Length - k + 1];
 
-        for (int i = k - 1; i < nums.Length; i++)
+        var currentMax = GetMax(nums, k, 0, k - 1, out var numMax);
+        result[0] = currentMax;
+
+        for (int i = k; i < nums.Length; i++)
         {
-            var max = int.MinValue;
-            for (int j = i - k + 1; j <= i; j++)
+            var left = i - k + 1;
+            if (nums[i] > currentMax)
             {
-                max = Math.Max(max, nums[j]);
+                currentMax = nums[i];
+                numMax = 1;
+            }
+            else if (nums[i] == currentMax)
+            {
+                if (nums[left - 1] != currentMax) numMax++;
+            }
+            else if (nums[i] < currentMax)
+            {
+                if (nums[left - 1] == currentMax)
+                {
+                    if (numMax == 1)
+                    {
+                        currentMax = GetMax(nums, k, left, i, out numMax);
+                    }
+                    else
+                    {
+                        numMax--;
+                    }
+                }
             }
 
-            result[i - k + 1] = max;
+            result[left] = currentMax;
         }
 
         return result;
+    }
+
+    private static int GetMax(int[] nums, int k, int left, int right, out int numMax)
+    {
+        numMax = 0;
+        var currentMax = int.MinValue;
+
+        for (int i = left; i <= right; i++)
+        {
+            if (nums[i] > currentMax)
+            {
+                currentMax = nums[i];
+            }
+        }
+
+        for (int i = left; i <= right; i++)
+        {
+            if (nums[i] == currentMax)
+            {
+                numMax++;
+            }
+        }
+
+        return currentMax;
     }
 }
 
