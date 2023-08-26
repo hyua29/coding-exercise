@@ -10,18 +10,18 @@ public class ZigzagConversion
 
         var arraySize = 2 * numRows - 2;
 
-        var lists = new List<IList<char>>();
+        var lists = new List<string>();
         for (int i = 0; i < numRows; i++)
         {
-            lists.Add(new List<char>());
+            lists.Add(string.Empty);
         }
 
         var multiplier = 0;
         for (int j = 1; j <= s.Length; j++)
         {
             var currentIndex = j - multiplier * arraySize;
-            if (currentIndex < numRows) lists[currentIndex - 1].Add(s[j - 1]);
-            else lists[numRows - 1 - currentIndex % numRows].Add(s[j - 1]);
+            if (currentIndex < numRows) lists[currentIndex - 1] += (s[j - 1]);
+            else lists[numRows - 1 - currentIndex % numRows] += (s[j - 1]);
 
             if (j % arraySize == 0)
             {
@@ -32,8 +32,7 @@ public class ZigzagConversion
         StringBuilder sb = new StringBuilder();
         foreach (var l in lists)
         {
-            var temp = string.Join("", l);
-            sb.Append(temp);
+            sb.Append(l);
         }
 
         return sb.ToString();
