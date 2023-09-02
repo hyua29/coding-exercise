@@ -1,5 +1,8 @@
 namespace LeetCode;
 
+/// <summary>
+/// https://leetcode.com/problems/smallest-number-in-infinite-set/description/?envType=study-plan-v2&envId=leetcode-75
+/// </summary>
 public class SmallestInfiniteSet
 {
     private readonly PriorityQueue<int, int> _addedBack;
