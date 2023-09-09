@@ -10,30 +10,34 @@ public class EditDistance
         int m = word1.Length;
         int n = word2.Length;
 
-        int[,] cost = new int[m + 1, n + 1];
-        for (int i = 0; i <= m; i++)
-            cost[i, 0] = i;
-        for (int i = 1; i <= n; i++)
-            cost[0, i] = i;
+        var buffer = new int [m + 1, n + 1];
+
+        for (int i = 1; i < m + 1; i++)
+        {
+            buffer[i, 0] = i;
+        }
+
+        for (int j = 1; j < n + 1; j++)
+        {
+            buffer[0, j] = j;
+        }
 
         for (int i = 0; i < m; i++)
         {
             for (int j = 0; j < n; j++)
             {
                 if (word1[i] == word2[j])
-                    cost[i + 1, j + 1] = cost[i, j];
+                {
+                    buffer[i + 1, j + 1] = buffer[i, j];
+                }
                 else
                 {
-                    int a = cost[i, j];
-                    int b = cost[i, j + 1];
-                    int c = cost[i + 1, j];
-                    cost[i + 1, j + 1] = a < b ? (a < c ? a : c) : (b < c ? b : c);
-                    cost[i + 1, j + 1]++;
+                    buffer[i + 1, j + 1] = Math.Min(Math.Min(buffer[i, j + 1], buffer[i + 1, j]), buffer[i, j]) + 1;
                 }
             }
         }
 
-        return cost[m, n];
+        return buffer[m, n];
     }
 }
 

@@ -47,7 +47,7 @@ public class LongestCommonSubsequenceTests
         string text2 = "ace";
         int expected = 3;
         int result = _solution.LongestCommonSubsequence(text1, text2);
-        Assert.AreEqual(expected, result);
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class LongestCommonSubsequenceTests
         string text2 = "def";
         int expected = 0;
         int result = _solution.LongestCommonSubsequence(text1, text2);
-        Assert.AreEqual(expected, result);
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
@@ -67,7 +67,7 @@ public class LongestCommonSubsequenceTests
         string text2 = "abc";
         int expected = 3;
         int result = _solution.LongestCommonSubsequence(text1, text2);
-        Assert.AreEqual(expected, result);
+        Assert.That(result, Is.EqualTo(expected));
     }
     
     [Test]
@@ -77,6 +77,6 @@ public class LongestCommonSubsequenceTests
         string text2 = "abcd";
         int expected = 4;
         int result = _solution.LongestCommonSubsequence(text1, text2);
-        Assert.AreEqual(expected, result);
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
