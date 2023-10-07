@@ -1,5 +1,8 @@
 ﻿namespace LeetCode.LeetCode75;
 
+/// <summary>
+/// https://leetcode.com/problems/search-suggestions-system/description/?envType=study-plan-v2&envId=leetcode-75
+/// </summary>
 public class SearchSuggestionsSystem
 {
     public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
@@ -47,6 +50,7 @@ public class SearchSuggestionsSystem
     private class Trie
     {
         public Trie?[] Next { get; }
+
         public List<string> Words { get; }
 
         public Trie()
