@@ -1,4 +1,4 @@
-namespace LeetCode.Leetcode150;
+namespace LeetCode.LeetCode150;
 
 public class SimplifyPathProblem
 {
