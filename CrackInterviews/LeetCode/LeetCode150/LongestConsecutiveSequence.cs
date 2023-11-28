@@ -1,5 +1,8 @@
 namespace LeetCode.LeetCode150;
 
+/// <summary>
+/// https://leetcode.com/problems/longest-consecutive-sequence/submissions/1108154108/?envType=study-plan-v2&amp;envId=top-interview-150
+/// </summary>
 public class LongestConsecutiveSequence
 {
     public int LongestConsecutive(int[] nums)
