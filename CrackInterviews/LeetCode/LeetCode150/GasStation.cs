@@ -9,31 +9,56 @@ public class GasStation
     {
         if (gas.Length != cost.Length) throw new ArgumentException();
 
-        var possibleStartingIndexes = new PriorityQueue<int, int>();
-        for (int i = 0; i < gas.Length; i++)
+        var result = -1;
+        var startingIndex = 0;
+        while (startingIndex < gas.Length)
         {
-            var diff = gas[i] - cost[i];
-            if (diff >= 0) possibleStartingIndexes.Enqueue(i, -diff);
-        }
-
-        var feasibleIndex = -1;
-        while (feasibleIndex == -1 && possibleStartingIndexes.TryDequeue(out var startingIndex, out _))
-        {
-            var spareGas = 0;
-            for (int i = 0; i < gas.Length; i++)
+            var surplus = gas[startingIndex];
+            var hasReachedEnd = true;
+            for (int offset = 0; offset < gas.Length; offset++)
             {
-                var index = (startingIndex + i) % gas.Length;
+                var currentIndex = (startingIndex + offset) % gas.Length;
+                surplus -= cost[currentIndex];
+                if (surplus < 0)
+                {
+                    // can't proceed
+                    startingIndex = startingIndex + offset + 1;
+                    hasReachedEnd = false;
+                    break;
+                }
 
-                spareGas = spareGas + gas[index] - cost[index];
-                if (spareGas < 0) break;
+                surplus += gas[(currentIndex + 1) % gas.Length];
             }
 
-            if (spareGas >= 0)
+            if (hasReachedEnd)
             {
-                feasibleIndex = startingIndex;
+                result = startingIndex;
+                break;
             }
         }
 
-        return feasibleIndex;
+        return result;
+    }
+}
+
+public class GasStationTest
+{
+    [Test]
+    public void Test_1()
+    {
+        var sol = new GasStation();
+
+        var gas = new[] {1, 2, 3, 4, 5};
+        var cost = new[] {3, 4, 5, 1, 2};
+        Assert.That(sol.CanCompleteCircuit(gas, cost), Is.EqualTo(3));
+    }
+    [Test]
+    public void Test_2()
+    {
+        var sol = new GasStation();
+
+        var gas = new[] {2,3,4};
+        var cost = new[] {3, 4, 3};
+        Assert.That(sol.CanCompleteCircuit(gas, cost), Is.EqualTo(-1));
     }
 }
